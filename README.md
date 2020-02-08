@@ -1,4 +1,4 @@
-# Factorio-MineCraft Bridge 0.1
+# Factorio-MineCraft Bridge 0.0.1
 
 FMCB is a cross-game mod for Factorio and Minecraft.
 
