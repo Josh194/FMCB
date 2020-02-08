@@ -11,7 +11,7 @@ public class FMCB {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		Block.registerBlocks();
+//		Block.registerBlocks();
 	}
 
 	@EventHandler

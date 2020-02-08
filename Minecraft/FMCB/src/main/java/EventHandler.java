@@ -21,12 +21,12 @@ import net.minecraftforge.items.IItemHandler;
 @Mod.EventBusSubscriber
 public class EventHandler {
 	
-	@SubscribeEvent
-    public static void registerBlocks(RegistryEvent.Register<Block> event) {
-		for (Block block : BlockGeneral.blocks) {
-	        event.getRegistry().register(block);
-		}
-    }
+//	@SubscribeEvent
+//    public static void registerBlocks(RegistryEvent.Register<Block> event) {
+//		for (Block block : BlockGeneral.blocks) {
+//	        event.getRegistry().register(block);
+//		}
+//    }
 
 	@SubscribeEvent
 	public static void onWorldLoad(PlayerLoggedInEvent event) {
