@@ -1,11 +1,15 @@
 package main.java;
 
+import main.java.block.BlockGeneral;
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -16,11 +20,19 @@ import net.minecraftforge.items.IItemHandler;
 
 @Mod.EventBusSubscriber
 public class EventHandler {
+	
+	@SubscribeEvent
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
+		for (Block block : BlockGeneral.blocks) {
+	        event.getRegistry().register(block);
+		}
+    }
 
 	@SubscribeEvent
 	public static void onWorldLoad(PlayerLoggedInEvent event) {
 		if (!event.player.world.isRemote) {
 			event.player.sendMessage(new TextComponentString("FMCB server successfully loaded"));
+			event.player.sendMessage(new TextComponentString("Save location:\n" + DimensionManager.getCurrentSaveRootDirectory().getAbsolutePath()));
 		}
 	}
 
