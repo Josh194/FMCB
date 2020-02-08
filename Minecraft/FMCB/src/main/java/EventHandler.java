@@ -31,7 +31,6 @@ public class EventHandler {
     }
 	
 	@SubscribeEvent
-
 	public static void registerItemBlocks(RegistryEvent.Register<Item> event) {
 		for (Block block : BlockGeneral.blocks) {
 	        event.getRegistry().register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
