@@ -29,8 +29,7 @@ public class EventHandler {
 		if (event.phase == Phase.END) {
 			if (event.world.getBlockState(new BlockPos(0, 67, 0)).getBlock() == Blocks.CHEST) {
 				TileEntity container = event.world.getTileEntity(new BlockPos(0, 67, 0));
-				IItemHandler itemHandler = container.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
-						EnumFacing.NORTH);
+				IItemHandler itemHandler = container.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH);
 
 				itemHandler.insertItem(0, new ItemStack(Blocks.COBBLESTONE, 1), false);
 			}
