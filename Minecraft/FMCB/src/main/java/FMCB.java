@@ -1,6 +1,7 @@
 package main.java;
 
-import net.minecraft.block.Block;
+import main.java.block.BlockGeneral;
+import net.minecraft.block.material.Material;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -11,7 +12,7 @@ public class FMCB {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-//		Block.registerBlocks();
+		new BlockGeneral(Material.ROCK, "Bruh");
 	}
 
 	@EventHandler

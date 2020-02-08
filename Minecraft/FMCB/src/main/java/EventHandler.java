@@ -3,6 +3,8 @@ package main.java;
 import main.java.block.BlockGeneral;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -21,12 +23,20 @@ import net.minecraftforge.items.IItemHandler;
 @Mod.EventBusSubscriber
 public class EventHandler {
 	
-//	@SubscribeEvent
-//    public static void registerBlocks(RegistryEvent.Register<Block> event) {
-//		for (Block block : BlockGeneral.blocks) {
-//	        event.getRegistry().register(block);
-//		}
-//    }
+	@SubscribeEvent
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
+		for (Block block : BlockGeneral.blocks) {
+	        event.getRegistry().register(block);
+		}
+    }
+	
+	@SubscribeEvent
+
+	public static void registerItemBlocks(RegistryEvent.Register<Item> event) {
+		for (Block block : BlockGeneral.blocks) {
+	        event.getRegistry().register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+		}
+	}
 
 	@SubscribeEvent
 	public static void onWorldLoad(PlayerLoggedInEvent event) {
