@@ -10,6 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -17,11 +18,16 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 @Mod.EventBusSubscriber
 public class EventHandler {
+	
+	public static NetworkHandler netHandler = null;
 	
 	@SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -36,6 +42,18 @@ public class EventHandler {
 	        event.getRegistry().register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
 		}
 	}
+	
+	@SubscribeEvent
+	public static void onMessage(ClientChatEvent event) {
+		netHandler.send(event.getMessage());
+	}
+	
+	@SubscribeEvent
+	public void onClientDisconnect(ClientDisconnectionFromServerEvent event) {
+		netHandler.closeConnection();
+		
+		netHandler = null;
+	}
 
 	@SubscribeEvent
 	public static void onWorldLoad(PlayerLoggedInEvent event) {
@@ -46,14 +64,25 @@ public class EventHandler {
 	}
 
 	@SubscribeEvent
+	public static void onClientTick(TickEvent.PlayerTickEvent event) {
+		if (netHandler == null) {
+			if (event.side == Side.CLIENT) {
+				netHandler = new NetworkHandler();
+				
+				netHandler.createConnection();
+			}
+		}
+	}
+	
+	@SubscribeEvent
 	public static void onTick(TickEvent.WorldTickEvent event) {
 		if (event.phase == Phase.END) {
-			if (event.world.getBlockState(new BlockPos(0, 67, 0)).getBlock() == Blocks.CHEST) {
-				TileEntity container = event.world.getTileEntity(new BlockPos(0, 67, 0));
-				IItemHandler itemHandler = container.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH);
-
-				itemHandler.insertItem(0, new ItemStack(Blocks.COBBLESTONE, 1), false);
-			}
+//			if (event.world.getBlockState(new BlockPos(0, 67, 0)).getBlock() == Blocks.CHEST) {
+//				TileEntity container = event.world.getTileEntity(new BlockPos(0, 67, 0));
+//				IItemHandler itemHandler = container.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH);
+//
+//				itemHandler.insertItem(0, new ItemStack(Blocks.COBBLESTONE, 1), false);
+//			}
 		}
 	}
 
