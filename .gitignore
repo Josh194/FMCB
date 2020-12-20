@@ -1,6 +1,4 @@
-/.vs/slnx.sqlite
-/.vs/ProjectSettings.json
-/bin/
+/bin
 /.project
 /.classpath
 /Minecraft/FMCB/.gradle
@@ -11,4 +9,3 @@
 /Minecraft/FMCB/Client.bat
 /Minecraft/FMCB/gradlew
 /Minecraft/FMCB/gradlew.bat
-/Minecraft/FMCB/compile.bat
