@@ -1,11 +1,17 @@
-/bin
-/.project
-/.classpath
-/Minecraft/FMCB/.gradle
-/Minecraft/FMCB/build
-/Minecraft/FMCB/run
-/Minecraft/FMCB/gradle
-/Minecraft/FMCB/build.gradle
-/Minecraft/FMCB/Client.bat
-/Minecraft/FMCB/gradlew
-/Minecraft/FMCB/gradlew.bat
+# Gradle Files
+Minecraft/FMCB/.gradle
+Minecraft/FMCB/build
+Minecraft/FMCB/gradle
+Minecraft/FMCB/logs
+Minecraft/FMCB/run
+Minecraft/FMCB/gradlew
+Minecraft/FMCB/gradlew.bat
+
+# Eclipse Project Files
+.project
+.classpath
+*.launch
+bin
+
+# IntelliJ Project Files
+/.gradle/
