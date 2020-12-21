@@ -6,7 +6,7 @@
 HANDLE hMapFile;
 LPVOID pBuf;
 
-JNIEXPORT void JNICALL Java_main_java_side_server_MemoryUtils_createBuffer(JNIEnv* env, jclass thisClass) {
+JNIEXPORT void JNICALL Java_main_java_util_MemoryUtils_createBuffer(JNIEnv* env, jclass thisClass) {
 	hMapFile = CreateFileMapping(
 		INVALID_HANDLE_VALUE,		// use paging file
 		NULL,						// default security
@@ -16,13 +16,13 @@ JNIEXPORT void JNICALL Java_main_java_side_server_MemoryUtils_createBuffer(JNIEn
 		"Local\\FMCBuffer");		// name of mapping object
 }
 
-JNIEXPORT void JNICALL Java_main_java_side_server_MemoryUtils_closeBuffer(JNIEnv* env, jclass thisClass) {
+JNIEXPORT void JNICALL Java_main_java_util_MemoryUtils_closeBuffer(JNIEnv* env, jclass thisClass) {
 	UnmapViewOfFile(pBuf);
 
 	CloseHandle(hMapFile);
 }
 
-JNIEXPORT jobject JNICALL Java_main_java_side_server_MemoryUtils_mapBuffer(JNIEnv* env, jclass thisClass) {
+JNIEXPORT jobject JNICALL Java_main_java_util_MemoryUtils_mapBuffer(JNIEnv* env, jclass thisClass) {
 	pBuf = MapViewOfFile(hMapFile,	// handle to map object
 		FILE_MAP_ALL_ACCESS,		// read/write permission
 		0,							// file offset (high-order DWORD)

@@ -1,6 +1,7 @@
 package main.java;
 
 import main.java.block.BlockGeneral;
+import main.java.util.NetworkUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -19,7 +20,7 @@ import net.minecraftforge.fml.relauncher.Side;
 @Mod.EventBusSubscriber
 public class EventHandler {
 	
-	public static NetworkHandler netHandler = null;
+	public static NetworkUtils netHandler = null;
 	
 	@SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -59,7 +60,7 @@ public class EventHandler {
 	public static void onClientTick(TickEvent.PlayerTickEvent event) {
 		if (netHandler == null) {
 			if (event.side == Side.CLIENT) {
-				netHandler = new NetworkHandler();
+				netHandler = new NetworkUtils();
 				
 				netHandler.createConnection();
 			}

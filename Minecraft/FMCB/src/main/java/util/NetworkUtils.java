@@ -1,4 +1,4 @@
-package main.java;
+package main.java.util;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class NetworkHandler {
+public class NetworkUtils {
 
 	//@SideOnly(Side.CLIENT)
 	// public static void
@@ -15,7 +15,7 @@ public class NetworkHandler {
 	private Socket client;
 	private DataOutputStream out;
 	
-	public NetworkHandler() {
+	public NetworkUtils() {
 		
 	}
 
