@@ -8,10 +8,10 @@ Minecraft/FMCB/gradlew
 Minecraft/FMCB/gradlew.bat
 
 # Eclipse Project Files
+Minecraft/FMCB/.settings
+bin
 .project
 .classpath
 *.launch
-bin
 
 # IntelliJ Project Files
-/.gradle/
