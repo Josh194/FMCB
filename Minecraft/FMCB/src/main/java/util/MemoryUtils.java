@@ -9,28 +9,35 @@ public class MemoryUtils {
 	}
 
 	/**
-	 * Creates the IPC buffer in the system paging file, or opens it if already created.
-	 * Call {@link #closeBuffer()} after all applications are finished with the buffer to prevent memory leaks.
+	 * Opens the IPC buffer, allowing the subsystem to further work with it.
+	 * Call {@link #closeBuffer()} after finished with it to prevent memory leaks.
+	 * 
+	 * @return true if the operation completed successfully, false otherwise.
 	 * 
 	 * @see #mapBuffer()
 	 */
-	public native static void createBuffer();
+	public native static boolean openBuffer();
 
 	/**
-	 * Unmaps the IPC buffer from memory and cleans up any resources created by {@link #createBuffer()}.
-	 * Failure to call this method will result in the buffer staying in memory until a restart or successful cleanup.
-	 * <p>
-	 * This method will complete regardless of the state of any other applications connected to the buffer,
-	 * so calling it while they are still attempting to use the buffer may cause crashes.
-	 */
-	public native static void closeBuffer();
-	// TODO Split closeBuffer() into separate unmap and close methods to allow applications to better communicate the buffer cleanup process.
-
-	/**
-	 * Maps the IPC buffer into the current process's memory, allowing it to access it like any other section of memory.
+	 * Maps the IPC buffer into the current process's memory space, allowing it to access it like any other section of memory.
 	 * 
-	 * @return a <code>ByteBuffer</code> that can be used to access the IPC buffer.
+	 * @return a <code>ByteBuffer</code> that can be used to access the IPC buffer, <code>null</code> if the funnction failed.
 	 */
 	public native static ByteBuffer mapBuffer();
+	
+	/**
+	 * Unmaps the IPC buffer from memory and cleans up any resources created by {@link #createBuffer()}.
+	 * <p>
+	 * Failure for this method to fully complete may result in the buffer staying in system memory until a restart,
+	 * so try to insure it can complete.
+	 * Note that running this method multiple times and getting a return value of both 1 and 2 is the same as a success.
+	 * 
+	 * @return
+	 *	0: If the function completed successfully.<br>
+	 *	1: If the function failed to unmap the buffer.<br>
+	 *	2: If the function failed to close the mapping handle.<br>
+	 *	3: If the function failed.
+	 */
+	public native static byte unmapBuffer();
 
 }
