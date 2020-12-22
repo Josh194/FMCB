@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 
 ---
@@ -11,7 +11,7 @@ assignees: ''
 A clear and concise description of what the bug is.
 
 **To Reproduce**
-Try to put a little bit of time into finding a way to reproduce the bug.
+Steps to reproducing the bug.
 If you can't find a reliable method, just describe any events you think might have caused it.
 
 **Expected behavior**
