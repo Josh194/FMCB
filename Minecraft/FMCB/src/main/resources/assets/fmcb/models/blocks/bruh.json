@@ -1,0 +1,8 @@
+{
+    "parent": "block/stone",
+    "textures": {
+	"top": "fmcb:blocks/bruh_top",
+	"side": "fmcb:blocks/bruh_side",
+	"bottom": "fmcb:blocks/bruh_bottom"
+    }
+}
