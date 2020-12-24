@@ -35,12 +35,12 @@ public class EventHandler {
 	        event.getRegistry().register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
 		}
 	}
-	
+	/*
 	@SubscribeEvent
 	public static void onMessage(ClientChatEvent event) {
 		netHandler.send(event.getMessage());
 	}
-	
+	*/
 	@SubscribeEvent
 	public void onClientDisconnect(ClientDisconnectionFromServerEvent event) {
 		netHandler.closeConnection();
