@@ -1,8 +1,13 @@
 #pragma once
 
+namespace {
+
 #include <WinDef.h>
 
+}
+
 namespace buffer_global {
-	constexpr DWORDLONG BUF_SIZE = 256;
+	// Note that this represents only the low-order DWORD for the buffer size
+	constexpr DWORD BUF_SIZE = 256;
 	const TCHAR bufName[] = TEXT("Local\\IGCBuffer");
 }
