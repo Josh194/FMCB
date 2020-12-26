@@ -2,15 +2,7 @@
 
 #include "Global.h"
 
-namespace {
-
 #include <cstdint>
-#include <windows.h>
-
-	HANDLE mapHandle;
-	LPVOID buffer;
-
-}
 
 /*
 Contains methods needed to interact with the shared IPC buffer.
@@ -26,18 +18,7 @@ namespace ipc {
 	
 	Returns true if the function succeeds.
 	*/
-	inline bool create() {
-		mapHandle = CreateFileMapping(
-			INVALID_HANDLE_VALUE,
-			0,
-			PAGE_READWRITE,
-			0,
-			buffer_global::BUF_SIZE,
-			buffer_global::bufName
-		);
-
-		return mapHandle != NULL;
-	}
+	bool create();
 
 	/*
 	Attempts to open the IPC buffer.
@@ -46,15 +27,7 @@ namespace ipc {
 	
 	Returns true if the function succeeds.
 	*/
-	inline bool open() {
-		mapHandle = OpenFileMapping(
-			FILE_MAP_ALL_ACCESS,
-			0,
-			buffer_global::bufName
-		);
-
-		return mapHandle != NULL;
-	}
+	bool open();
 
 	/*
 	Maps the IPC buffer into the memory of the calling process.
@@ -63,17 +36,7 @@ namespace ipc {
 	
 	Return NULL if the function fails.
 	*/
-	inline void* map() {
-		buffer = MapViewOfFile(
-			mapHandle,
-			FILE_MAP_ALL_ACCESS,
-			0,
-			0,
-			buffer_global::BUF_SIZE
-		);
-
-		return buffer;
-	}
+	void* map();
 
 	/*
 	Unmaps the IPC buffer from the calling process's memory space and closes the associated handle.
@@ -88,11 +51,6 @@ namespace ipc {
 		2: If the function failed to close the mapping handle.
 		3: If the function failed.
 	*/
-	inline int8_t unmap() {
-		bool nUnmapped = UnmapViewOfFile(buffer) == NULL;
-		bool nClosed = CloseHandle(mapHandle) == NULL;
-
-		return nUnmapped | (nClosed << 1);
-	}
+	int8_t unmap();
 
 }
