@@ -9,10 +9,14 @@ Minecraft/FMCB/gradlew.bat
 
 # Eclipse Project Files
 Minecraft/FMCB/.settings
-bin
 .project
 .classpath
 *.launch
 
 # IntelliJ Project Files
 Minecraft/FMCB/.idea
+
+# Custom Scripts
+
+# Output
+bin/
