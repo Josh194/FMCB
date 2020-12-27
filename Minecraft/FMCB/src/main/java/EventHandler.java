@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class EventHandler {
 	
 	public static NetworkUtils netHandler = null;
-	
+	/*
 	@SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		for (Block block : BlockGeneral.blocks) {
@@ -35,6 +35,7 @@ public class EventHandler {
 	        event.getRegistry().register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
 		}
 	}
+	*/
 	/*
 	@SubscribeEvent
 	public static void onMessage(ClientChatEvent event) {

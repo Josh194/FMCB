@@ -18,7 +18,7 @@ public class BlockGeneral extends Block {
 		
 		setCreativeTab(CreativeTabs.FOOD);
 		
-		blocks.add(this);
+		//blocks.add(this);
 	}
 
 

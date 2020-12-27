@@ -1,8 +1,12 @@
 {
-    "parent": "block/stone",
+    "parent": "block/cube",
     "textures": {
-	"top": "fmcb:blocks/bruh_top",
-	"side": "fmcb:blocks/bruh_side",
-	"bottom": "fmcb:blocks/bruh_bottom"
+	"particle": "fmcb:blocks/bruh_side",
+        "down": "fmcb:blocks/bruh_bottom",
+        "up": "fmcb:blocks/bruh_top",
+        "north": "fmcb:blocks/bruh_side",
+        "east": "fmcb:blocks/bruh_side",
+        "south": "fmcb:blocks/bruh_side",
+        "west": "fmcb:blocks/bruh_side"
     }
 }

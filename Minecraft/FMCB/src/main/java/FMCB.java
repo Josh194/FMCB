@@ -1,5 +1,6 @@
 package main.java;
 
+import init.ModBlocks;
 import init.ModItems;
 import main.java.block.BlockGeneral;
 import net.minecraft.block.material.Material;
@@ -18,8 +19,9 @@ public class FMCB {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		System.out.println("fmcb:preInit");
-		new BlockGeneral(Material.ROCK, "Bruh");
+		//new BlockGeneral(Material.ROCK, "Bruh");
 		ModItems.init();
+		ModBlocks.init();
 	}
 
 	@EventHandler
