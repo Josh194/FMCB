@@ -1,6 +1,6 @@
-package init;
+package main.java.init;
 
-import items.ItemBruj;
+import main.java.items.ItemBruj;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;

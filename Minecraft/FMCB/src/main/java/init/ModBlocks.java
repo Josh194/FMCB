@@ -1,4 +1,4 @@
-package init;
+package main.java.init;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

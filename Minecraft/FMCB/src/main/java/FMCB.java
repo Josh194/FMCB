@@ -1,7 +1,7 @@
 package main.java;
 
-import init.ModBlocks;
-import init.ModItems;
+import main.java.init.ModBlocks;
+import main.java.init.ModItems;
 import main.java.block.BlockGeneral;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.fml.common.Mod;
