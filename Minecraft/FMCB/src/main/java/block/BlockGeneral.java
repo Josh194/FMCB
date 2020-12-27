@@ -1,14 +1,11 @@
 package main.java.block;
 
-import java.util.ArrayList;
-
+import main.java.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 
 public class BlockGeneral extends Block {
-	
-	public static ArrayList<BlockGeneral> blocks = new ArrayList<BlockGeneral>();
 	
 	public BlockGeneral(Material material, String name) {
 		super(material);
@@ -18,7 +15,7 @@ public class BlockGeneral extends Block {
 		
 		setCreativeTab(CreativeTabs.FOOD);
 		
-		blocks.add(this);
+		ModBlocks.blocks.add(this);
 	}
 
 
