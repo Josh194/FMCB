@@ -1,7 +1,13 @@
 cmake_minimum_required(VERSION 3.19)
 
-project(FMCB)
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo" CACHE STRING "")
 
 set(CMAKE_CXX_FLAGS "-std=c++17")
+set(CMAKE_CXX_FLAGS_DEBUG  "-g")
+set(CMAKE_CXX_FLAGS_RELEASE  "-O3 -DNDEBUG")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO  "-O2 -g -DNDEBUG")
 
-add_subdirectory(shared)
+project(FMCB)
+
+# Add any directories containing a CMakeLists.txt that should be built here
+add_subdirectory(shared/memory)
