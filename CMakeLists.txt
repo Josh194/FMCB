@@ -10,6 +10,7 @@ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO  "-O2 -g -DNDEBUG")
 project(FMCB)
 
 # Add any (internal) directories containing a CMakeLists.txt that should be built here
+add_subdirectory(core)
 add_subdirectory(shared/memory)
 
 # Add subsystem directories containing a CMakeLists.txt here
