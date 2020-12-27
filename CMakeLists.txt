@@ -9,5 +9,9 @@ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO  "-O2 -g -DNDEBUG")
 
 project(FMCB)
 
-# Add any directories containing a CMakeLists.txt that should be built here
+# Add any (internal) directories containing a CMakeLists.txt that should be built here
 add_subdirectory(shared/memory)
+
+# Add subsystem directories containing a CMakeLists.txt here
+# This will need to modularized later
+add_subdirectory(Minecraft)
