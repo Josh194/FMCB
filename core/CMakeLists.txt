@@ -1,0 +1,1 @@
+add_executable(Core Core.cpp)
