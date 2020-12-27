@@ -1,4 +1,4 @@
-# FMCB 0.0.3-alpha
+# FMCB 0.1.0-alpha.3
 
 FMCB is a cross-game platform that allows the linking of multiple games together.
 
