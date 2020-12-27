@@ -1,1 +1,1 @@
-#define VERSION "0.1.0-alpha.3"
+#define VERSION "0.1.0-alpha.1" // Different than project version for now
