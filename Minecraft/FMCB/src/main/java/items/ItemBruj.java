@@ -1,4 +1,4 @@
-package items;
+package main.java.items;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
