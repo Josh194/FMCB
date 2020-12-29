@@ -7,6 +7,8 @@ import net.minecraft.item.Item;
 public class ItemGeneral extends Item {
 
     public ItemGeneral (String name){
+    	super();
+    	
         setUnlocalizedName(name);
         setRegistryName(name);
         

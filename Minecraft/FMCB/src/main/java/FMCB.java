@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = "fmcb", useMetadata = true)
 public class FMCB {
 
+	// Needed?
 	@Mod.Instance
 	public static FMCB instance;
 
