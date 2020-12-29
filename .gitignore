@@ -1,5 +1,6 @@
 # Gradle Files
 Minecraft/FMCB/.gradle
+Minecraft/FMCB/bin
 Minecraft/FMCB/build
 Minecraft/FMCB/gradle
 Minecraft/FMCB/logs
@@ -7,11 +8,14 @@ Minecraft/FMCB/run
 Minecraft/FMCB/gradlew
 Minecraft/FMCB/gradlew.bat
 
+# CMake/Ninja Files
+/bin
+
 # Eclipse Project Files
 Minecraft/FMCB/.settings
-.project
-.classpath
-*.launch
+Minecraft/FMCB/.project
+Minecraft/FMCB/.classpath
+Minecraft/FMCB/*.launch
 
 # IntelliJ Project Files
 Minecraft/FMCB/.idea

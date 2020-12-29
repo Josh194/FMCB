@@ -1,14 +1,9 @@
 package main.java;
 
-import main.java.block.BlockGeneral;
 import main.java.util.NetworkUtils;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -21,26 +16,12 @@ import net.minecraftforge.fml.relauncher.Side;
 public class EventHandler {
 	
 	public static NetworkUtils netHandler = null;
-	
-	@SubscribeEvent
-    public static void registerBlocks(RegistryEvent.Register<Block> event) {
-		for (Block block : BlockGeneral.blocks) {
-	        event.getRegistry().register(block);
-		}
-    }
-	
-	@SubscribeEvent
-	public static void registerItemBlocks(RegistryEvent.Register<Item> event) {
-		for (Block block : BlockGeneral.blocks) {
-	        event.getRegistry().register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
-		}
-	}
-	
+	/*
 	@SubscribeEvent
 	public static void onMessage(ClientChatEvent event) {
 		netHandler.send(event.getMessage());
 	}
-	
+	*/
 	@SubscribeEvent
 	public void onClientDisconnect(ClientDisconnectionFromServerEvent event) {
 		netHandler.closeConnection();
