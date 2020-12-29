@@ -19,3 +19,8 @@ Minecraft/FMCB/*.launch
 
 # IntelliJ Project Files
 Minecraft/FMCB/.idea
+
+# Custom Scripts
+
+# Output
+bin/
