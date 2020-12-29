@@ -1,5 +1,8 @@
 # FMCB <!-- Logo replaces this line -->
-0.1.0-alpha.4 ![](https://img.shields.io/github/last-commit/Josh194/FMCB)
+![Release](https://img.shields.io/github/v/release/Josh194/FMCB)
+![Version](https://img.shields.io/badge/dynamic/json?label=version&prefix=v&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FJosh194%2FFMCB%2Fdevelop%2Finfo.json)
+![Last Commit](https://img.shields.io/github/last-commit/Josh194/FMCB)
+<!-- Add downloads badge later -->
 
 FMCB is a cross-game platform that allows the linking of multiple games together.
 
