@@ -12,7 +12,7 @@ Minecraft/FMCB/gradlew.bat
 /bin
 
 # VSCode Project Files
-Minecraft/FMCB/.vscode
+.vscode
 
 # Eclipse Project Files
 Minecraft/FMCB/.settings
