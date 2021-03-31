@@ -1,4 +1,4 @@
-package main.java.init;
+package fmcb.init;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 
-import main.java.block.BlockGeneral;
+import fmcb.block.BlockGeneral;
 
 @Mod.EventBusSubscriber(modid="fmcb")
 public class ModBlocks {

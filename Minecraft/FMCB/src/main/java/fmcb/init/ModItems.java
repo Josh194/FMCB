@@ -1,8 +1,8 @@
-package main.java.init;
+package fmcb.init;
 
 import java.util.ArrayList;
 
-import main.java.item.ItemGeneral;
+import fmcb.item.ItemGeneral;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;

@@ -11,6 +11,9 @@ Minecraft/FMCB/gradlew.bat
 # CMake/Ninja Files
 /bin
 
+# VSCode Project Files
+Minecraft/FMCB/.vscode
+
 # Eclipse Project Files
 Minecraft/FMCB/.settings
 Minecraft/FMCB/.project

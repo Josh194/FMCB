@@ -1,6 +1,6 @@
-package main.java.item;
+package fmcb.item;
 
-import main.java.init.ModItems;
+import fmcb.init.ModItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
