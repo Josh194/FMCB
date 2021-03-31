@@ -9,10 +9,6 @@ Minecraft/FMCB/gradlew
 Minecraft/FMCB/gradlew.bat
 
 # CMake/Ninja Files
-build/*
-!build/build.bat
-!build/rebuild.bat
-!build/clean.bat
 /bin
 
 # VSCode Project Files
