@@ -11,7 +11,9 @@ project(FMCB)
 
 # Add any (internal) directories containing a CMakeLists.txt that should be built here
 add_subdirectory(core)
-add_subdirectory(shared/memory)
+add_subdirectory(shared)
+
+add_subdirectory(tests)
 
 # Add subsystem directories containing a CMakeLists.txt here
 # This will need to modularized later

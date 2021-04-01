@@ -3,7 +3,7 @@
 if "%2%" == "core" (
 	set targets=core/all shared/memory/all
 ) else (
-	set targets=
+	set targets=%2%
 )
 
 cd ../bin
