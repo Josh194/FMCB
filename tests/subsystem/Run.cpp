@@ -22,7 +22,9 @@ int main() {
         NMPWAIT_NOWAIT
     );
 
-    std::cout << "Data received: ";
+    std::cout << "Data received" << std::endl;
+
+    std::cout << "Session Id: ";
     for (int i = 0; i < bytesRead; i++){
         std::cout << +in[i] << " ";
     }
