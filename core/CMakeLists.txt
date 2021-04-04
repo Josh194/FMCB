@@ -1,4 +1,4 @@
-# Add as a download?
 include_directories(${CMAKE_SOURCE_DIR}/minparse/include)
 
-add_executable(Core Core.cpp)
+# This should probably be improved, the core server could potentially become quite large
+add_executable(Core Core.cpp registration/PipeServer.cpp registration/Register.cpp)

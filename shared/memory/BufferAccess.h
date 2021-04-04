@@ -5,9 +5,9 @@
 #include <cstdint>
 
 /*
-Contains methods needed to interact with the shared IPC buffer.
+Contains functions needed to interact with the shared IPC buffer.
 
-Subsystems should use these methods instead of creating their own implementations to keep the process consistent.
+Subsystems should use these functions instead of creating their own implementations to keep the process consistent.
 */
 namespace ipc {
 
@@ -42,8 +42,8 @@ namespace ipc {
 	Unmaps the IPC buffer from the calling process's memory space and closes the associated handle.
 	
 	This function will attempt to close the associated handle regardless of whether or not it was able to unmap the buffer, though the return value will reflect the failure.
-	Failure to fully complete may result in the buffer staying in system memory untill a restart, so processes should strive to insure this function can fully complete,
-	or cleanup manually if that is not possibble for whatever reason.
+	Failure to fully complete may result in the buffer staying in system memory until a restart, so processes should strive to insure this function can fully complete,
+	or cleanup manually if that is not possible for whatever reason.
 	
 	Returns
 		0: If the function completed successfully.
