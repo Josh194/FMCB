@@ -1,5 +1,6 @@
 #pragma once
 
+// ? Can this be done better?
 namespace {
 
 #include <WinDef.h>
