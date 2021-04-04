@@ -4,8 +4,8 @@
   "title": "FMCB",
   "author": "MegaGlub & the4naves",
   "contact": "",
-  "homepage": "https://github.com/cqszott01/factorio-mc",
+  "homepage": "https://github.com/Josh194/FMCB",
   "factorio_version": "0.17",
   "dependencies": [ "base >= 0.17" ],
-  "description": "Adds the factorio side of the FMCB system."
+  "description": "Adds the factorio FMCB subsystem."
 }
