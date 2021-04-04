@@ -4,8 +4,6 @@
 
 typedef uint64_t SessionId[2]; // 64 bits * 2 = 128 bits
 
-//typedef void* HANDLE;
-
 /*
 Contains the functions necessary to interact with the internal list of registered clients.
 */
@@ -25,6 +23,7 @@ namespace client_register {
 
     Returns a pointer to a unique session id to be given to the requesting client, or nullptr if adding the client would bring the number of registered clients over the internal maximum.
     */
+    // TODO: start replacing win32 types with either generic types or a preprocessor selected type in preperation for the mac/linux port
     SessionId* addClient(char* name, unsigned char nameLength, uint32_t processId);
 
     /*
@@ -39,6 +38,6 @@ namespace client_register {
     */
     unsigned char size();
 
-    // TODO: add [] override
+    // TODO: add [] override maybe
 
 }

@@ -5,8 +5,6 @@
 #include <vector>
 
 // ? Put in header? ----------------------------------------
-#include <cstdint>
-
 // This ordering should be fairly optimal for memory/performance
 struct Client {
 	HANDLE communication;
@@ -24,17 +22,22 @@ void client_register::init(unsigned char maxClients) {
 	::maxClients = maxClients;
 }
 
-// TODO: max nameLength must be 24 - 1 (- 1 so a null terminator can be inserted)
+/*
+TODO: nameLength must be (max - 1) (- 1 so a null terminator can be inserted)
+We may need a program wide error system, similar to win32, in order to free up return values
+*/
 SessionId* client_register::addClient(char* name, unsigned char nameLength, uint32_t processId) {
 	if (clients.size() == maxClients) {
 		return nullptr;
 	}
 
-	clients.push_back({NULL, {0, 0xa538f}, {}}); // TODO: generate a unique SID automatically
-
 	// TODO: Reduce number of instances of clients[clients.size() - 1]
-	memcpy(&clients[clients.size() - 1].name, name, nameLength);
-	clients[clients.size() - 1].name[nameLength] = 0; // Adds a null terminator
+	// ? This doesn't initialize the new object, right?
+	clients.emplace_back();
+	clients[clients.size() - 1].sessionId[1] = 0xa538f; // TODO: generate a unique SID automatically
+
+	memcpy(&clients[clients.size() - 1].name, name, nameLength); // Copy the (Non null-terminated name into the struct)
+	clients[clients.size() - 1].name[nameLength] = 0; // Inserts a null terminator at the end of the name so it can be easily printed
 
 	std::cout << "Name (Length " << +nameLength << "): " << clients[clients.size() - 1].name << std::endl;
 	std::cout << "PID: " << processId << std::endl;
@@ -44,14 +47,12 @@ SessionId* client_register::addClient(char* name, unsigned char nameLength, uint
 
 bool client_register::removeClient(unsigned char index) {
 	if (index < clients.size()) {
-		// TODO: This can probably be done better
-		// ? Does erase() return -1/0/etc one failure?
+		// TODO: This can maybe be done more cleanly
 		clients.erase(clients.begin() + index);
 
 		return true;
 	}
 
-	// ? Does skipping the else give worse/better/same performance?
 	return false;
 }
 

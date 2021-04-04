@@ -22,6 +22,9 @@ struct PipeInst {
  
 PipeInst pipes[PIPE_COUNT];
 
+// TODO: maybe clean this up
+const char error_response = -1;
+
 bool registration_server::init() {
     for (int i = 0; i < PIPE_COUNT; i++) {
 		/*
@@ -48,8 +51,7 @@ bool registration_server::init() {
 		);
 
 		if (pipes[i].handle == INVALID_HANDLE_VALUE) {
-			std::cout << "Failed to initialize pipe#" << i << " with error " << GetLastError()
-				<< ". This could be because a previous session was not cleaned up completely, or an application could be attempting to hijack communication." << std::endl;
+			std::cout << "Failed to initialize pipe#" << i << " with error " << GetLastError() << ". This could be because a previous session was not cleaned up completely, or an application could be attempting to hijack communication." << std::endl;
 
 			return false;
 		}
@@ -81,7 +83,7 @@ bool registration_server::cycle() {
 				pipes[i].waiting = false;
 
 				DisconnectNamedPipe(pipes[i].handle);
-				// TODO: move reconnect code to a function
+				// ? Shoule reconnect code be moved to a function?
 				ConnectNamedPipe(pipes[i].handle, &pipes[i].overlap);
 
 				DWORD error = GetLastError();
@@ -94,6 +96,7 @@ bool registration_server::cycle() {
 				}
 			}
 		} else {
+			// TODO: Overlapped IO means that this may run more than once for the same connection, this should be fixed
 			ReadFile(
 				pipes[i].handle,
 				&pipes[i].buffer,
@@ -107,20 +110,27 @@ bool registration_server::cycle() {
 
 				SessionId* id = client_register::addClient(pipes[i].buffer + 6, *(unsigned char*) (pipes[i].buffer + 5), *(uint32_t*) (pipes[i].buffer + 1));
 
+				// TODO: maybe move read/write code to their own functions, this is a bit messy
 				if (id == nullptr) {
-					// TODO: implement actual code for this; pipes should notify subsystems attempting to connect that their connection cannot be serviced to prevent them from assuming an instance will soon be available to answer their request.
-					std::cout << "Warning, maximum number of subsystems reached" << std::endl;
+					std::cout << "Maximum number of subsystems reached, request will not be serviced" << std::endl;
 
-					return false;
+					WriteFile(
+						pipes[i].handle,
+						&error_response,
+						1,
+						NULL,
+						&pipes[i].overlap
+					);
+				} else {
+					// TODO: write a status byte (like the fail code) and the communication handle
+					WriteFile(
+						pipes[i].handle,
+						id,
+						16,
+						NULL,
+						&pipes[i].overlap
+					);
 				}
-
-				WriteFile(
-					pipes[i].handle,
-					id,
-					16,
-					NULL,
-					&pipes[i].overlap
-				);
 
 				pipes[i].bytesRead = 0;
 				pipes[i].waiting = true;

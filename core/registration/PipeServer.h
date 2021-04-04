@@ -1,5 +1,6 @@
 #pragma once
 
+// TODO: this namespace should be more modularized
 namespace registration_server {
 
     bool init();

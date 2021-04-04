@@ -5,7 +5,6 @@
 #include "registration/Register.h"
 
 #include <iostream>
-#include <vector>
 #include <atomic>
 #include <climits>
 // ? Can we include a slightly less bloated header?
@@ -16,7 +15,7 @@ HANDLE inputThreadHandle; // TODO: maybe put this somewhere else
 std::atomic<bool> shouldExit = false; // TODO: Write a better way of doing this
 
 void cleanupAndExit() {
-	std::cout << "Cleaning up; you should receive one more message before the program exits." << std::endl;
+	std::cout << "Preparing to exit; you should receive a message before the program exits." << std::endl;
 
 	if (inputThreadHandle != NULL) {
 		/*
@@ -65,7 +64,7 @@ int main(int argc, char** argv) {
 
 			This mode will output extensive debugging info related to connections, internal feature processing, etc.
 			*/
-			// Alternatively, test code could be controlled via the preprocessor, and two versions of the core server could be built.
+			// * Alternatively, test code could be controlled via the preprocessor, and two versions of the core server could be built.
 			std::cout << "Core server started in test mode" << std::endl;
 
 			break;
