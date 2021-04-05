@@ -1,3 +1,3 @@
 #pragma once
 
-#define VERSION "0.1.0-alpha.3" // Different than project version until subsystems are moved
+#define VERSION "0.2.0-alpha" // Different than project version until subsystems are moved
