@@ -1,0 +1,3 @@
+[submodule "minparse"]
+	path = minparse
+	url = https://github.com/Josh194/ArgParse
