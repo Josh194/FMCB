@@ -8,9 +8,12 @@ int main() {
 
     DWORD bytesRead;
 
-    // Type: REGISTER_NEW (1), PID: 2305 (1 9 0 0), Name Size: 4 (4), Name: Test (84 101 115 116)
-    unsigned char out[10] = {1, 1, 9, 0, 0, 4, 84, 101, 115, 116};
+    // Type: REGISTER_NEW (1), PID: DWORD (0 0 0 0), Name Size: 4 (4), Name: Test (84 101 115 116)
+    unsigned char out[10] = {1, 0, 0, 0, 0, 4, 84, 101, 115, 116};
     unsigned char in[32];
+
+    // TODO: cleanup
+    *(DWORD*) (out + 1) = GetCurrentProcessId();
 
     CallNamedPipeA(
         "\\\\.\\pipe\\FMBCRegister",
@@ -31,6 +34,22 @@ int main() {
     std::cout << std::endl;
 
     std::cout << bytesRead << " bytes read" << std::endl;
+
+    HANDLE file = *(HANDLE*) (in + 17);
+
+    void* map = MapViewOfFile(
+		file,
+		FILE_MAP_ALL_ACCESS,
+		0,
+		0,
+		1024 // TODO: this should be handled better
+	);
+
+    std::cout << "Address: " << map << std::endl;
+
+    UnmapViewOfFile(map);
+
+    std::cout << CloseHandle(file) << " " << GetLastError() << std::endl;
 
     return 0;
 }

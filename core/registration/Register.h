@@ -30,7 +30,7 @@ namespace client_register {
 
     Returns a pointer to the added client, which now contains a unique sessionId, or nullptr if adding the client would bring the number of registered clients over the internal maximum.
     */
-    const Client* addClient(char* name, unsigned char nameLength, uint32_t processId);
+    const Client* addClient(char* name, unsigned char nameLength);
 
     /*
     Removes the client at the given index.
