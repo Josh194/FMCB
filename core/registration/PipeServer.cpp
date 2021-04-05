@@ -108,11 +108,12 @@ bool registration_server::cycle() {
 			if (pipes[i].bytesRead != 0) {
 				std::cout << "Connection received on pipe#" << i << std::endl;
 
-				SessionId* id = client_register::addClient(pipes[i].buffer + 6, *(unsigned char*) (pipes[i].buffer + 5), *(uint32_t*) (pipes[i].buffer + 1));
+				// TODO:: clean this up
+				const Client* client = client_register::addClient(pipes[i].buffer + 6, *(unsigned char*) (pipes[i].buffer + 5), *(uint32_t*) (pipes[i].buffer + 1));
 
 				// TODO: maybe move read/write code to their own functions, this is a bit messy
-				if (id == nullptr) {
-					std::cout << "Maximum number of subsystems reached, request will not be serviced" << std::endl;
+				if (client == nullptr) {
+					std::cout << "Maximum number of subsystems reached, request will not be serviced" << std::endl; // ! Or prehaps an error occurred, we need an error system!
 
 					WriteFile(
 						pipes[i].handle,
@@ -125,7 +126,7 @@ bool registration_server::cycle() {
 					// TODO: write a status byte (like the fail code) and the communication handle
 					WriteFile(
 						pipes[i].handle,
-						id,
+						client -> sessionId,
 						16,
 						NULL,
 						&pipes[i].overlap
