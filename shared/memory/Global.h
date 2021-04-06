@@ -1,11 +1,11 @@
 #pragma once
 
 // ? Can this be done better?
-namespace {
+//namespace {
 
 #include <WinDef.h>
 
-}
+//}
 
 namespace buffer_global {
 	// Note that this represents only the low-order DWORD for the buffer size
