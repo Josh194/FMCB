@@ -1,48 +1,26 @@
 #include "BufferAccess.h"
 
-#include <windows.h>
+#include "../Global.h"
 
-HANDLE mapHandle;
+#include <Windows.h>
+
 LPVOID buffer;
 
-bool ipc::create() {
-	mapHandle = CreateFileMapping(
-		INVALID_HANDLE_VALUE,
-		0,
-		PAGE_READWRITE,
-		0,
-		buffer_global::BUF_SIZE,
-		buffer_global::bufName
-	);
-
-	return mapHandle != 0;
-}
-
-bool ipc::open() {
-	mapHandle = OpenFileMapping(
-		FILE_MAP_ALL_ACCESS,
-		0,
-		buffer_global::bufName
-	);
-
-	return mapHandle != 0;
-}
-
-void* ipc::map() {
+void* communication::map() {
 	buffer = MapViewOfFile(
-		mapHandle,
+		api_global::fileHandle,
 		FILE_MAP_ALL_ACCESS,
 		0,
 		0,
-		buffer_global::BUF_SIZE
+		api_global::bufferSize
 	);
 
 	return buffer;
 }
 
-int8_t ipc::unmap() {
+char communication::unmap() {
 	bool nUnmapped = UnmapViewOfFile(buffer) == 0;
-	bool nClosed = CloseHandle(mapHandle) == 0;
+	bool nClosed = CloseHandle(api_global::fileHandle) == 0;
 
-	return nUnmapped | (nClosed << 1);
+	return nUnmapped | (nClosed << 1); // ? Is this working correctly?
 }
