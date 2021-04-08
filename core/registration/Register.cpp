@@ -4,16 +4,6 @@
 #include <iostream>
 #include <vector>
 
-// ? Put in header? ----------------------------------------
-// This ordering should be fairly optimal for memory/performance
-struct Client {
-	HANDLE communication;
-	SessionId sessionId;
-
-	char name[24];
-};
-// ? -------------------------------------------------------
-
 unsigned char maxClients = 2; // Could probably just use an int, but this adds another level of protection from runoff
 // ? Maybe replace with preallocated array, custom allocator, or some other data structure?
 std::vector<Client> clients;
@@ -26,28 +16,59 @@ void client_register::init(unsigned char maxClients) {
 TODO: nameLength must be (max - 1) (- 1 so a null terminator can be inserted)
 We may need a program wide error system, similar to win32, in order to free up return values
 */
-SessionId* client_register::addClient(char* name, unsigned char nameLength, uint32_t processId) {
+const Client* client_register::addClient(char* name, unsigned char nameLength) {
 	if (clients.size() == maxClients) {
 		return nullptr;
 	}
 
-	// TODO: Reduce number of instances of clients[clients.size() - 1]
 	// ? This doesn't initialize the new object, right?
-	clients.emplace_back();
-	clients[clients.size() - 1].sessionId[1] = 0xa538f; // TODO: generate a unique SID automatically
+	Client& client = clients.emplace_back();
 
-	memcpy(&clients[clients.size() - 1].name, name, nameLength); // Copy the (Non null-terminated name into the struct)
-	clients[clients.size() - 1].name[nameLength] = 0; // Inserts a null terminator at the end of the name so it can be easily printed
+	// ? Can we close the file mapping handle after mapping it into process memory?
+	client.fileHandle = CreateFileMappingA(
+		INVALID_HANDLE_VALUE,
+		NULL,
+		PAGE_READWRITE,
+		0,
+		1024,
+		NULL // Protects access from unauthorized local subsystems
+	);
 
-	std::cout << "Name (Length " << +nameLength << "): " << clients[clients.size() - 1].name << std::endl;
-	std::cout << "PID: " << processId << std::endl;
+	// ! We need an program wide error system
+	if (client.fileHandle == NULL) {
+		std::cout << "Create file error: " << GetLastError() << std::endl;
 
-	return &clients[clients.size() - 1].sessionId;
+		return nullptr;
+	}
+
+	client.communication = MapViewOfFile(
+		client.fileHandle,
+		FILE_MAP_ALL_ACCESS,
+		0,
+		0,
+		1024 // TODO: this should be handled better
+	);
+
+	// ! We need an program wide error system
+	if (client.communication == NULL) {
+		std::cout << "Map error: " << GetLastError() << std::endl;
+
+		return nullptr;
+	}
+
+	client.sessionId[1] = 0xa538f; // TODO: generate a unique SID automatically
+
+	memcpy(&client.name, name, nameLength); // Copy the (Non null-terminated name into the struct)
+	client.name[nameLength] = 0; // Inserts a null terminator at the end of the name so it can be easily printed
+
+	std::cout << "Name (Length " << +nameLength << "): " << client.name << std::endl;
+
+	return &client;
 }
 
 bool client_register::removeClient(unsigned char index) {
 	if (index < clients.size()) {
-		// TODO: This can maybe be done more cleanly
+		// TODO: this can maybe be done more cleanly
 		clients.erase(clients.begin() + index);
 
 		return true;
@@ -58,4 +79,12 @@ bool client_register::removeClient(unsigned char index) {
 
 unsigned char client_register::size() {
 	return clients.size();
+}
+
+void client_register::cleanup() {
+	for(int i = 0; i < clients.size(); i++){
+		UnmapViewOfFile(clients[i].communication);
+
+		CloseHandle(clients[i].fileHandle);
+	}
 }

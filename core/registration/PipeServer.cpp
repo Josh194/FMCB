@@ -108,11 +108,12 @@ bool registration_server::cycle() {
 			if (pipes[i].bytesRead != 0) {
 				std::cout << "Connection received on pipe#" << i << std::endl;
 
-				SessionId* id = client_register::addClient(pipes[i].buffer + 6, *(unsigned char*) (pipes[i].buffer + 5), *(uint32_t*) (pipes[i].buffer + 1));
+				// TODO:: clean this up maybe
+				const Client* client = client_register::addClient(pipes[i].buffer + 6, pipes[i].buffer[5]);
 
 				// TODO: maybe move read/write code to their own functions, this is a bit messy
-				if (id == nullptr) {
-					std::cout << "Maximum number of subsystems reached, request will not be serviced" << std::endl;
+				if (client == nullptr) {
+					std::cout << "Maximum number of subsystems reached, request will not be serviced" << std::endl; // ! Or prehaps an error occurred, we need an error system!
 
 					WriteFile(
 						pipes[i].handle,
@@ -122,11 +123,38 @@ bool registration_server::cycle() {
 						&pipes[i].overlap
 					);
 				} else {
-					// TODO: write a status byte (like the fail code) and the communication handle
+					// TODO: make this more efficient maybe
+					// ! TODO: does not account for 32 bit handles
+					char message[25];
+
+					message[0] = 1; // Success
+
+					memcpy(message + 1, client -> sessionId, 16);
+
+					// TODO: clean this up
+					HANDLE clientHandle = OpenProcess(
+						PROCESS_DUP_HANDLE,
+						false,
+						*(uint32_t*) (pipes[i].buffer + 1)
+					);
+
+					// ? What happens if the client doesn't close this handle? Should we close it?
+					DuplicateHandle(
+						GetCurrentProcess(),
+						client -> fileHandle,
+						clientHandle,
+						(HANDLE*) (message + 17),
+						NULL,
+						false,
+						DUPLICATE_SAME_ACCESS 
+					);
+
+					CloseHandle(clientHandle);
+
 					WriteFile(
 						pipes[i].handle,
-						id,
-						16,
+						&message,
+						25,
 						NULL,
 						&pipes[i].overlap
 					);

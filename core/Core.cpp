@@ -27,6 +27,8 @@ void cleanupAndExit() {
 
 	registration_server::cleanup();
 
+	client_register::cleanup();
+
 	std::cout << "Cleanup complete, exiting." << std::endl;
 
 	std::exit(0);
