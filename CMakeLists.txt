@@ -5,6 +5,12 @@ project(FMCB)
 include(CheckIPOSupported)
 check_ipo_supported()
 
+# maybe error check to insure version was found
+file(READ info.json INFO_JSON)
+string(JSON VERSION GET "${INFO_JSON}" version)
+
+message("Server version is ${VERSION}")
+
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo" CACHE STRING "")
 
 set(CMAKE_CXX_FLAGS "-std=c++17")

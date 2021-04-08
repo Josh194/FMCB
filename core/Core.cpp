@@ -1,4 +1,4 @@
-#include "Global.h"
+#include "Info.h"
 #include "minparse.h"
 
 #include "registration/PipeServer.h"
