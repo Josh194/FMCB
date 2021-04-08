@@ -20,7 +20,3 @@ add_subdirectory(core)
 add_subdirectory(shared)
 
 add_subdirectory(tests)
-
-# Add subsystem directories containing a CMakeLists.txt here
-# This will be removed when subsystems are modularized
-add_subdirectory(Minecraft)
