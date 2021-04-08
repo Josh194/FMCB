@@ -33,6 +33,7 @@ int main() {
 
     UnmapViewOfFile(map);
 
+    // ? Does the duplicated handle need to be closed?  
     std::cout << CloseHandle(file) << " " << GetLastError() << std::endl;
 
     return 0;
