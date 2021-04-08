@@ -31,9 +31,10 @@ char registration::request() {
     // TODO: cleanup
     *(DWORD*) (out + 1) = GetCurrentProcessId();
 
+    // TODO: can we find a use for this?
     DWORD bytesRead;
 
-    // ! TODO: return -1 if pipe is busy
+    // TODO: extended error checking
     CallNamedPipeA(
         "\\\\.\\pipe\\FMBCRegister",
         &out,
@@ -44,10 +45,18 @@ char registration::request() {
         NMPWAIT_NOWAIT
     );
 
+    // ? Should we explicitly set last error to zero beforehand?
+    if (GetLastError() == ERROR_PIPE_BUSY) {
+        return -1;
+    }
+
     // ! TODO: save session id
 
-    api_global::bufferSize = 1024;
-    api_global::fileHandle = *(HANDLE*) (in + 17);
+    // TODO: cleanup
+    if (in[0] == 0) { // if successful
+        api_global::bufferSize = 1024;
+        api_global::fileHandle = *(HANDLE*) (in + 17);
+    }
 
     return in[0];
 }
