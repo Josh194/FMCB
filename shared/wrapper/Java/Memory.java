@@ -24,7 +24,7 @@ public class Memory {
 	/**
 	 * Maps the IPC buffer into the current process's memory space, allowing it to access it like any other section of memory.
 	 * 
-	 * @return a <code>ByteBuffer</code> that can be used to access the IPC buffer, <code>null</code> if the funnction failed.
+	 * @return a <code>ByteBuffer</code> that can be used to access the IPC buffer, <code>null</code> if the function failed.
 	 */
 	public native static ByteBuffer mapBuffer();
 	
