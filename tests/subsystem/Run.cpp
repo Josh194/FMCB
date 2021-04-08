@@ -18,23 +18,6 @@ int main() {
     } else {
         std::cout << "Connection failed" << std::endl;
     }
-
-    HANDLE file = *(HANDLE*) (in + 17);
-
-    void* map = MapViewOfFile(
-		file,
-		FILE_MAP_ALL_ACCESS,
-		0,
-		0,
-		1024 // TODO: this should be handled better
-	);
-
-    std::cout << "Address: " << map << std::endl;
-
-    UnmapViewOfFile(map);
-
-    // ? Does the duplicated handle need to be closed?  
-    std::cout << CloseHandle(file) << " " << GetLastError() << std::endl;
-
+  
     return 0;
 }
