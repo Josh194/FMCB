@@ -11,6 +11,8 @@ string(JSON VERSION GET "${INFO_JSON}" version)
 
 message("Server version is ${VERSION}")
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo" CACHE STRING "")
 
 set(CMAKE_CXX_FLAGS "-std=c++17")
