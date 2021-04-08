@@ -127,7 +127,7 @@ bool registration_server::cycle() {
 					// ! TODO: does not account for 32 bit handles
 					char message[25];
 
-					message[0] = 1; // Success
+					message[0] = 0; // Success code
 
 					memcpy(message + 1, client -> sessionId, 16);
 
