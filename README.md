@@ -18,6 +18,6 @@ If you would like to build the project yourself, you will need CMake, Ninja, GCC
 
 At the moment, the project only supports windows, but this will be worked on in the future.
 
-If you would like to contribute, maybe wait a little while, as the project is in very early days, and general organization is still being worked on.
+If you would like to contribute, maybe wait a little while, as the project is in very early days, and general organization is still being worked on, but otherwise, please read the CONTRIBUTING.md.
 
 Some documentation exists on our github wiki, but it is still in progress, and is very incomplete.
