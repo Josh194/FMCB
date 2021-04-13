@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+constexpr unsigned char maxName = 24;
+
 typedef uint64_t SessionId[2]; // 64 bits * 2 = 128 bits
 
 // This ordering should be fairly optimal for memory/performance
@@ -10,7 +12,7 @@ struct Client {
 	void* communication;
 	SessionId sessionId;
 
-	char name[24];
+	char name[maxName];
 };
 
 /*
