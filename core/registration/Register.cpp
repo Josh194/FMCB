@@ -4,11 +4,11 @@
 #include <iostream>
 #include <vector>
 
-unsigned char maxClients = 2; // Could probably just use an int, but this adds another level of protection from runoff
+std::uint32_t maxClients = 2;
 // ? Maybe replace with preallocated array, custom allocator, or some other data structure?
 std::vector<Client> clients;
 
-void client_register::init(unsigned char maxClients) {
+void client_register::init(std::uint32_t maxClients) {
 	::maxClients = maxClients;
 }
 

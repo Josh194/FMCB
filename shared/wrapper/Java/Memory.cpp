@@ -1,6 +1,6 @@
 #include "Memory.h"
 
-#include <BufferAccess.h>
+#include <memory/BufferAccess.h>
 #include <Global.h>
 
 JNIEXPORT jboolean JNICALL Java_fmcb_memory_Memory_openBuffer(JNIEnv* env, jclass obj) {

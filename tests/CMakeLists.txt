@@ -1,1 +1,2 @@
 add_subdirectory(subsystem)
+add_subdirectory(linkedarray)

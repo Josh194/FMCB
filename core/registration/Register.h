@@ -23,7 +23,7 @@ namespace client_register {
 
     This method should only be called once.
     */
-    void init(unsigned char maxClients);
+    void init(std::uint32_t maxClients);
 
     /*
     Adds a client to the internal register.
