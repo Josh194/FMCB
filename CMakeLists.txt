@@ -16,7 +16,7 @@ set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo" CACHE STRING "")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # -mno-ms-bitfields is only needed to make -Wpadded work correctly, this could cause problems down the line. A gnu bugzilla report has been filed under the id: 100058
-set(CMAKE_CXX_FLAGS "-std=c++17 -mno-ms-bitfields")
+set(CMAKE_CXX_FLAGS "-std=c++17 -mno-ms-bitfields -fdiagnostics-color=always")
 
 set(CXX_WARNINGS "-Wall -Wextra -Wshadow -Wdouble-promotion -Wundef -Wconversion -Wcast-align=strict -Wpadded")
 

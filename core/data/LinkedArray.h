@@ -14,6 +14,7 @@ Memory usage is relatively efficient (two pointers per node), and cache locality
 'TType' specifies the type held in the list, 'TBlock' specifies the block size.
 */
 // TODO: maybe overload [] operator
+// TODO: maybe provide function to run code on all elements
 // TODO: implement array looping functionality
 // TODO: maybe move function definitions to a .inl or .cpp (does .inl hint to the compiler to no treat it as a translation unit?) file
 template<class TType, unsigned int TBlock>
@@ -100,6 +101,6 @@ private:
     }
 
     void allocate() {
-
+        return;
     }
 };

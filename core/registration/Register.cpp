@@ -5,8 +5,6 @@
 #include <vector>
 
 std::uint32_t maxClients = 2;
-// ? Maybe replace with preallocated array, custom allocator, or some other data structure?
-std::vector<Client> clients;
 
 void client_register::init(std::uint32_t maxClients) {
 	::maxClients = maxClients;
@@ -16,13 +14,12 @@ void client_register::init(std::uint32_t maxClients) {
 TODO: nameLength must be (max - 1) (- 1 so a null terminator can be inserted)
 We may need a program wide error system, similar to win32, in order to free up return values
 */
-const Client* client_register::addClient(char* name, unsigned char nameLength) {
-	if (clients.size() == maxClients) {
+const Client* client_register::registerClient(char* name, unsigned char nameLength) {
+	if (database::clients.getLength() == maxClients) {
 		return nullptr;
 	}
 
-	// ? This doesn't initialize the new object, right?
-	Client& client = clients.emplace_back();
+	Client& client = *database::clients.add();
 
 	// ? Can we close the file mapping handle after mapping it into process memory?
 	client.fileHandle = CreateFileMappingA(
@@ -58,7 +55,7 @@ const Client* client_register::addClient(char* name, unsigned char nameLength) {
 
 	client.sessionId[1] = 0xa538f; // TODO: generate a unique SID automatically
 
-	memcpy(&client.name, name, nameLength); // Copy the (Non null-terminated name into the struct)
+	memcpy(&(client.name), name, nameLength); // Copy the (Non null-terminated name into the struct)
 	client.name[nameLength] = 0; // Inserts a null terminator at the end of the name so it can be easily printed
 
 	std::cout << "Name (Length " << +nameLength << "): " << client.name << std::endl;
@@ -66,25 +63,21 @@ const Client* client_register::addClient(char* name, unsigned char nameLength) {
 	return &client;
 }
 
-bool client_register::removeClient(unsigned char index) {
-	if (index < clients.size()) {
-		// TODO: this can maybe be done more cleanly
-		clients.erase(clients.begin() + index);
-
-		return true;
-	}
-
-	return false;
-}
-
 unsigned char client_register::size() {
-	return clients.size();
+	return database::clients.getLength();
 }
 
 void client_register::cleanup() {
-	for(int i = 0; i < clients.size(); i++){
-		UnmapViewOfFile(clients[i].communication);
+	// TODO: cleanup
+	LinkedArray<Client, 32>::Node* head = database::clients.getHead();
 
-		CloseHandle(clients[i].fileHandle);
-	}
+	LinkedArray<Client, 32>::Node* current = head;
+
+	do {
+		UnmapViewOfFile(current -> data.communication);
+
+		CloseHandle(current -> data.fileHandle);
+
+		current = current -> next;
+	} while (current != head);
 }

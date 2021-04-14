@@ -1,3 +1,0 @@
-namespace client_access {
-    
-}

@@ -1,6 +1,7 @@
 #include "Info.h"
 #include "minparse.h"
 
+#include "data/Database.h"
 #include "registration/PipeServer.h"
 #include "registration/Register.h"
 
@@ -9,6 +10,10 @@
 #include <climits>
 // ? Can we include a slightly less bloated header?
 #include <Windows.h>
+
+#if CHAR_BIT != 8 
+	#error "Byte size is not 8, FMCB assumes the size of a byte in order to provide a common ground for subsystems, and to insure the length of certain security keys.\nCritical error detected, shutting down."
+#endif
 
 HANDLE inputThreadHandle; // TODO: maybe put this somewhere else
 
@@ -46,12 +51,6 @@ DWORD WINAPI inputThread(LPVOID lpThreadParameter) {
 
 int main(int argc, char** argv) {
 	std::cout << "FMCB core server " << VERSION << std::endl;
-
-	if (CHAR_BIT != 8) {
-		std::cout << "Byte size is not 8, FMCB assumes the size of a byte in order to provide a common ground for subsystems, and to insure the length of certain security keys.\nCritical error detected, shutting down." << std::endl;
-
-		return 0;
-	}
 
 	minparse::init(argc - 1, argv + 1);
 
@@ -140,6 +139,8 @@ int main(int argc, char** argv) {
 	if (!registration_server::init()) {
 		cleanupAndExit();
 	}
+
+	database::init();
 
 	std::cout << "Startup complete" << std::endl;
 
