@@ -1,7 +1,3 @@
 #include "Database.h"
 
-LinkedArray<Client, 32> database::clients;
-
-void database::init() {
-   clients = LinkedArray<Client, 32>();
-}
+LinkedArray<Client, 8> database::clients = LinkedArray<Client, 8>(); // ? Why can't this be initialized in a method? If it is, memory gets badly corrupted.

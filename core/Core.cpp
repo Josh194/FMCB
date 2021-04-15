@@ -1,7 +1,6 @@
 #include "Info.h"
 #include "minparse.h"
 
-#include "data/Database.h"
 #include "registration/PipeServer.h"
 #include "registration/Register.h"
 
@@ -12,7 +11,7 @@
 #include <Windows.h>
 
 #if CHAR_BIT != 8 
-	#error "Byte size is not 8, FMCB assumes the size of a byte in order to provide a common ground for subsystems, and to insure the length of certain security keys.\nCritical error detected, shutting down."
+	#error "Byte size is not 8, FMCB assumes the size of a byte in order to provide a common ground for subsystems and to insure the length of certain security keys."
 #endif
 
 HANDLE inputThreadHandle; // TODO: maybe put this somewhere else
@@ -139,8 +138,6 @@ int main(int argc, char** argv) {
 	if (!registration_server::init()) {
 		cleanupAndExit();
 	}
-
-	database::init();
 
 	std::cout << "Startup complete" << std::endl;
 

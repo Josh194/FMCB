@@ -2,7 +2,6 @@
 
 #include <windows.h>
 #include <iostream>
-#include <vector>
 
 std::uint32_t maxClients = 2;
 
@@ -69,9 +68,9 @@ unsigned char client_register::size() {
 
 void client_register::cleanup() {
 	// TODO: cleanup
-	LinkedArray<Client, 32>::Node* head = database::clients.getHead();
+	const LinkedArray<Client, 8>::Node* head = database::clients.getHead();
 
-	LinkedArray<Client, 32>::Node* current = head;
+	const LinkedArray<Client, 8>::Node* current = head;
 
 	do {
 		UnmapViewOfFile(current -> data.communication);

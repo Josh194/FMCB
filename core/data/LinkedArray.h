@@ -85,7 +85,7 @@ public:
         length = 0;
     }
 
-    inline Node* getHead() {
+    inline const Node* getHead() {
         return dataHead;
     }
 

@@ -19,7 +19,7 @@ namespace database {
 
     void init();
 
-    extern LinkedArray<Client, 32> clients;
+    extern LinkedArray<Client, 8> clients; // ! cleanup
 
     // We will also need a container for other server connections in the future
     
