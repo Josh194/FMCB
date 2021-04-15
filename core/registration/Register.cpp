@@ -68,15 +68,13 @@ unsigned char client_register::size() {
 
 void client_register::cleanup() {
 	// TODO: cleanup
-	const LinkedArray<Client, 8>::Node* head = database::clients.getHead();
+	auto current = database::clients.getHead();
 
-	const LinkedArray<Client, 8>::Node* current = head;
-
-	do {
-		UnmapViewOfFile(current -> data.communication);
+	for (unsigned int i = 0; i < database::clients.getLength(); i++) {
+        UnmapViewOfFile(current -> data.communication);
 
 		CloseHandle(current -> data.fileHandle);
 
 		current = current -> next;
-	} while (current != head);
+    }
 }

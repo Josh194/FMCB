@@ -1,5 +1,5 @@
 namespace translate {
 
-    void process(void* mem);
+    void process(void* communication, unsigned int clientIndex, unsigned int clientCount);
 
 }
