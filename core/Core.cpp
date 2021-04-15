@@ -1,6 +1,7 @@
 #include "Info.h"
 #include "minparse.h"
 
+#include "processing/CScheduler.h"
 #include "registration/PipeServer.h"
 #include "registration/Register.h"
 
@@ -147,6 +148,8 @@ int main(int argc, char** argv) {
 		}
 
 		registration_server::cycle();
+
+		scheduler::tmpProcess(); // TODO: move somewhere else, another thread preferrably
 
 		Sleep(250);
 	}
