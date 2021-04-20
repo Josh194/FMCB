@@ -29,7 +29,7 @@ char registration::request() {
     unsigned char in[32];
 
     // TODO: cleanup
-    *(DWORD*) (out + 1) = GetCurrentProcessId();
+    *reinterpret_cast<DWORD*>(out + 1) = GetCurrentProcessId();
 
     // TODO: can we find a use for this?
     DWORD bytesRead;
@@ -55,7 +55,7 @@ char registration::request() {
     // TODO: cleanup
     if (in[0] == 0) { // if successful
         api_global::bufferSize = 1024;
-        api_global::fileHandle = *(HANDLE*) (in + 17);
+        api_global::fileHandle = *reinterpret_cast<DWORD**>(in + 17);
     }
 
     return in[0];
