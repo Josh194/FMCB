@@ -43,9 +43,9 @@ int main() {
     if (registration::request() == 0) {
         std::cout << "Connection successful" << std::endl;
 
-        char* comm = (char*) communication::map();
+        char* comm = reinterpret_cast<char*>(communication::map());
 
-        std::cout << (void*) comm << std::endl;
+        std::cout << reinterpret_cast<void*>(comm) << std::endl;
 
         comm[0] = 5;
 
