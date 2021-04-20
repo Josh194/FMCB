@@ -1,16 +1,12 @@
-#include "Memory.h"
+#include "fmcb_Memory.h"
 
 #include <memory/BufferAccess.h>
 #include <Global.h>
 
-JNIEXPORT jboolean JNICALL Java_fmcb_memory_Memory_openBuffer(JNIEnv* env, jclass obj) {
-	return ipc::open();
-}
-
-JNIEXPORT jobject JNICALL Java_fmcb_memory_Memory_mapBuffer(JNIEnv* env, jclass obj) {
-	return env -> NewDirectByteBuffer(ipc::map(), buffer_global::BUF_SIZE);
+JNIEXPORT jobject JNICALL Java_fmcb_Memory_mapBuffer(JNIEnv* env, jclass obj) {
+	return env -> NewDirectByteBuffer(communication::map(), api_global::bufferSize);
 }
 
 JNIEXPORT jbyte JNICALL Java_fmcb_memory_Memory_unmapBuffer(JNIEnv* env, jclass obj) {
-	return ipc::unmap();
+	return communication::unmap();
 }

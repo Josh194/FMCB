@@ -8,19 +8,12 @@ import java.nio.ByteBuffer;
 public class Memory {
 
 	/**
-	 * Opens the IPC buffer, allowing the subsystem to further work with it.
-	 * Call {@link #closeBuffer()} after finished with it to prevent memory leaks.
-	 * 
-	 * @return true if the operation completed successfully, false otherwise.
-	 * 
-	 * @see #mapBuffer()
-	 */
-	public native static boolean openBuffer();
-
-	/**
 	 * Maps the IPC buffer into the current process's memory space, allowing it to access it like any other section of memory.
+	 * Call {@link #closeBuffer()} after finished with it to prevent memory leaks.
+	 * <p>
+	 * A successful call to {@link Register#initialize()} must have been made prior, or the function will fail.
 	 * 
-	 * @return a <code>ByteBuffer</code> that can be used to access the IPC buffer, <code>null</code> if the function failed.
+	 * @return A <code>ByteBuffer</code> that can be used to access the IPC buffer, <code>null</code> if the function failed.
 	 */
 	public native static ByteBuffer mapBuffer();
 	

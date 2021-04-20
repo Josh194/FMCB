@@ -18,9 +18,9 @@ JNIEXPORT jboolean JNICALL Java_fmcb_Register_initialize
 /*
  * Class:     fmcb_Register
  * Method:    request
- * Signature: ()C
+ * Signature: ()B
  */
-JNIEXPORT jchar JNICALL Java_fmcb_Register_request
+JNIEXPORT jbyte JNICALL Java_fmcb_Register_request
   (JNIEnv *, jclass);
 
 #ifdef __cplusplus

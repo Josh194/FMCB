@@ -9,14 +9,6 @@ extern "C" {
 #endif
 /*
  * Class:     fmcb_Memory
- * Method:    openBuffer
- * Signature: ()Z
- */
-JNIEXPORT jboolean JNICALL Java_fmcb_Memory_openBuffer
-  (JNIEnv *, jclass);
-
-/*
- * Class:     fmcb_Memory
  * Method:    mapBuffer
  * Signature: ()Ljava/nio/ByteBuffer;
  */
