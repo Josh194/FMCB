@@ -85,7 +85,7 @@ public:
         length = 0;
     }
 
-    inline const Node* getHead() {
+    inline Node* getHead() { // TODO: find way to prevent Node::next from being edited
         return dataHead;
     }
 
