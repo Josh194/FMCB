@@ -3,27 +3,27 @@ import java.util.Scanner;
 import fmcb.Register;
 import fmcb.Memory;
 
-class InputThread extends Thread {
-
-    public void run() {
-        Scanner scanner = new Scanner(System.in);
-
-        scanner.nextLine();
-
-        Run.shouldExit = true;
-
-        scanner.close();
-    }
-
-}
-
 public class Run {
-    
+
+    public static volatile boolean shouldExit = false;
+
     static {
         System.loadLibrary("libJavaWrapperDef"); // Loads C++ library to provide definitions for the API Java wrapper.
     }
 
-    public static volatile boolean shouldExit = false;
+    static class InputThread extends Thread {
+
+        public void run() {
+            Scanner scanner = new Scanner(System.in);
+    
+            scanner.nextLine();
+    
+            Run.shouldExit = true;
+    
+            scanner.close();
+        }
+    
+    }
 
     public static void main(String[] args) {
         InputThread input = new InputThread();
