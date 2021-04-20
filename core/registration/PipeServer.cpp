@@ -109,7 +109,7 @@ bool registration_server::cycle() {
 				std::cout << "Connection received on pipe#" << i << std::endl;
 
 				// TODO:: clean this up maybe
-				const Client* client = client_register::addClient(pipes[i].buffer + 6, pipes[i].buffer[5]);
+				const Client* client = client_register::registerClient(pipes[i].buffer + 6, pipes[i].buffer[5]);
 
 				// TODO: maybe move read/write code to their own functions, this is a bit messy
 				if (client == nullptr) {
