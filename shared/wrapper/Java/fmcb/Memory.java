@@ -1,15 +1,11 @@
-package fmcb.memory;
+package fmcb;
 
 import java.nio.ByteBuffer;
 
 /**
- * Optional library for subsystems to access the dynamic buffer libraries.
+ * Java library for subsystems to access the communication buffer.
  */
 public class Memory {
-
-	static {
-		System.loadLibrary("libMemoryJava"); // Loads dynamic library to provide definitions for this class.
-	}
 
 	/**
 	 * Opens the IPC buffer, allowing the subsystem to further work with it.
