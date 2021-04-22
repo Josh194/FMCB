@@ -1,6 +1,7 @@
-#include "Global.h"
+#include "Info.h"
 #include "minparse.h"
 
+#include "processing/CScheduler.h"
 #include "registration/PipeServer.h"
 #include "registration/Register.h"
 
@@ -9,6 +10,10 @@
 #include <climits>
 // ? Can we include a slightly less bloated header?
 #include <Windows.h>
+
+#if CHAR_BIT != 8 
+	#error "Byte size is not 8, FMCB assumes the size of a byte in order to provide a common ground for subsystems and to insure the length of certain security keys."
+#endif
 
 HANDLE inputThreadHandle; // TODO: maybe put this somewhere else
 
@@ -26,6 +31,8 @@ void cleanupAndExit() {
 	}
 
 	registration_server::cleanup();
+
+	client_register::cleanup();
 
 	std::cout << "Cleanup complete, exiting." << std::endl;
 
@@ -45,12 +52,6 @@ DWORD WINAPI inputThread(LPVOID lpThreadParameter) {
 int main(int argc, char** argv) {
 	std::cout << "FMCB core server " << VERSION << std::endl;
 
-	if (CHAR_BIT != 8) {
-		std::cout << "Byte size is not 8, FMCB assumes the size of a byte in order to provide a common ground for subsystems, and to insure the length of certain security keys.\nCritical error detected, shutting down." << std::endl;
-
-		return 0;
-	}
-
 	minparse::init(argc - 1, argv + 1);
 
 	minparse::argument arg = {};
@@ -59,6 +60,8 @@ int main(int argc, char** argv) {
 		// TODO: Obviously not very good, minparse will need to be farther developed
 		switch (arg.arg[0]) {
 		case 'x':
+			// TODO: implement
+
 			/*
 			Used by subsystem developers in order to test their code.
 
@@ -68,28 +71,41 @@ int main(int argc, char** argv) {
 			std::cout << "Core server started in test mode" << std::endl;
 
 			break;
+
 		case 't':
+			// TODO: implement
 			if (arg.argc == 1) {
 				std::cout << "Processing thread count set to " << arg.argv[0] << std::endl;
 			}
 
 			break;
+
 		case 's':
 			if (arg.argc == 1) { // TODO: make minparse do checking like this automatically maybe
 				long in = std::strtol(arg.argv[0], nullptr, 10); // TODO: maybe error check a bit more
-				
-				if (in > 255) {
-					std::cout << "argument 's' must be lower than 256, using maximum value instead." << std::endl; // TODO: make minparse do error checking like this automatically maybe
 
-					in = 255;
+				if (in > UINT32_MAX) {
+					std::cout << "argument 's' must be lower than 2^32, using maximum value instead." << std::endl; // TODO: make minparse do error checking like this automatically maybe
+
+					in = UINT32_MAX;
 				}
 
 				client_register::init(in);
 
 				std::cout << "Max subsystems set to " << in << std::endl;
 			} else {
-				std::cout << "argument 's' must be an integer between 0 and 255, ignoring given values." << std::endl;
+				std::cout << "argument 's' must be a 32 bit integer, ignoring given values." << std::endl;
 			}
+
+			break;
+
+		case 'm':
+			// TODO: implement
+
+			// Completely eliminates dynamic memory usage, except for maybe some edge cases where it really is the best option
+			// ? Alternatively, we could have an option to select the client database block size; The larger the blocks, the more immune to fragmentation over time, but also the higher worst case wasted memory.
+			// ! Should we just use a custom malloc/free? It would allow us to have a limited size, address bounded, sequentially allocated, heap, exactly what we need.
+			std::cout << "Memory preallocation enabled" << std::endl;
 
 			break;
 
@@ -132,6 +148,8 @@ int main(int argc, char** argv) {
 		}
 
 		registration_server::cycle();
+
+		scheduler::tmpProcess(); // TODO: move somewhere else, another thread preferrably
 
 		Sleep(250);
 	}

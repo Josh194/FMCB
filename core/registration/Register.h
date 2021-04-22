@@ -1,8 +1,8 @@
 #pragma once
 
-#include <cstdint>
+#include "data/Database.h"
 
-typedef uint64_t SessionId[2]; // 64 bits * 2 = 128 bits
+#include <cstdint>
 
 /*
 Contains the functions necessary to interact with the internal list of registered clients.
@@ -14,29 +14,22 @@ namespace client_register {
 
     This method should only be called once.
     */
-    void init(unsigned char maxClients);
+    void init(std::uint32_t maxClients);
 
     /*
     Adds a client to the internal register.
 
-    The returned pointer should not be written to, only read from.
-
-    Returns a pointer to a unique session id to be given to the requesting client, or nullptr if adding the client would bring the number of registered clients over the internal maximum.
+    Returns a pointer to the added client, which now contains a unique sessionId, or nullptr if adding the client would bring the number of registered clients over the internal maximum.
     */
-    // TODO: start replacing win32 types with either generic types or a preprocessor selected type in preperation for the mac/linux port
-    SessionId* addClient(char* name, unsigned char nameLength, uint32_t processId);
-
-    /*
-    Removes the client at the given index.
-
-    Returns false if no client is registered at the provided index.
-    */
-    bool removeClient(unsigned char index);
+    const Client* registerClient(char* name, unsigned char nameLength);
 
     /*
     Returns the number of registered clients.
     */
     unsigned char size();
+
+    // ? Can this be done better?
+    void cleanup();
 
     // TODO: add [] override maybe
 

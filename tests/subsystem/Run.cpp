@@ -1,36 +1,70 @@
 #include <iostream>
 
-#include <Windows.h>
-#include <cstdint>
+#include "Register.h"
+#include "BufferAccess.h"
+
+#include <atomic>
+#include <Windows.h> // ! Only needed for inputThread
+
+std::atomic<bool> shouldExit = false; // TODO: Write a better way of doing this
+DWORD WINAPI inputThread(LPVOID lpThreadParameter) {
+	int a;
+
+	std::cin >> a;
+
+	shouldExit = true;
+
+	return 0;
+}
+
+HANDLE inputThreadHandle;
 
 int main() {
+	inputThreadHandle = CreateThread(
+		NULL,
+		1024,
+		inputThread,
+		NULL,
+		0,
+		NULL
+	);
+
+	if (inputThreadHandle == NULL) {
+		std::cout << "Input thread failed to start with error " << GetLastError() << std::endl;
+
+		return 0;
+	}
+
     std::cout << "Attempting to connect to core server" << std::endl;
 
-    DWORD bytesRead;
+    // ! Isn't used by request() yet
+    // registration::initialize();
 
-    // Type: REGISTER_NEW (1), PID: 2305 (1 9 0 0), Name Size: 4 (4), Name: Test (84 101 115 116)
-    unsigned char out[10] = {1, 1, 9, 0, 0, 4, 84, 101, 115, 116};
-    unsigned char in[32];
+    if (registration::request() == 0) {
+        std::cout << "Connection successful" << std::endl;
 
-    CallNamedPipeA(
-        "\\\\.\\pipe\\FMBCRegister",
-        &out,
-        10,
-        &in,
-        32,
-        &bytesRead,
-        NMPWAIT_NOWAIT
-    );
+        char* comm = reinterpret_cast<char*>(communication::map());
 
-    std::cout << "Data received" << std::endl;
+        std::cout << reinterpret_cast<void*>(comm) << std::endl;
 
-    std::cout << "Session Id: ";
-    for (int i = 0; i < bytesRead; i++){
-        std::cout << +in[i] << " ";
+        comm[0] = 5;
+
+        while (shouldExit == false) {
+            if (comm[512] == 5) {
+                break;
+            }
+
+            Sleep(250);
+        }
+
+        std::cout << +communication::unmap() << std::endl;
+    } else {
+        std::cout << "Connection failed" << std::endl;
     }
-    std::cout << std::endl;
 
-    std::cout << bytesRead << " bytes read" << std::endl;
+    CloseHandle(inputThreadHandle);
+
+    std::cout << "Exiting" << std::endl;
 
     return 0;
 }
