@@ -8,7 +8,6 @@
 
 // TODO: replace with variable; pipe count must be <= maxSubsystems
 #define PIPE_COUNT 2
-#define PIPE_BUFFER_SIZE sizeof(handshake::Request)
 
 struct PipeInst {
 	HANDLE handle = INVALID_HANDLE_VALUE;
@@ -16,15 +15,12 @@ struct PipeInst {
 	bool waiting = false;
 
 	DWORD bytesRead;
-	char buffer[PIPE_BUFFER_SIZE]; 
+	handshake::Request buffer; 
 
 	OVERLAPPED overlap;
 };
  
 PipeInst pipes[PIPE_COUNT];
-
-// TODO: maybe clean this up
-const char error_response = -1;
 
 bool registration_server::init() {
     for (int i = 0; i < PIPE_COUNT; i++) {
@@ -101,7 +97,7 @@ bool registration_server::cycle() {
 			ReadFile(
 				pipes[i].handle,
 				&pipes[i].buffer,
-				PIPE_BUFFER_SIZE,
+				sizeof(pipes -> buffer),
 				&pipes[i].bytesRead,
 				&pipes[i].overlap
 			);
@@ -110,33 +106,35 @@ bool registration_server::cycle() {
 				std::cout << "Connection received on pipe#" << i << std::endl;
 
 				// TODO:: clean this up maybe
-				const Client* client = client_register::registerClient(pipes[i].buffer + 6, pipes[i].buffer[5]);
+				const Client* client = client_register::registerClient(&pipes[i].buffer.name[0], pipes[i].buffer.nameLength); // TODO: have register client use a uint32_t for name length
 
 				// TODO: maybe move read/write code to their own functions, this is a bit messy
 				if (client == nullptr) {
 					std::cout << "Maximum number of subsystems reached, request will not be serviced" << std::endl; // ! Or prehaps an error occurred, we need an error system!
 
+					handshake::RequestAck::Status tmp = handshake::RequestAck::Status::ERROR_SERVER_BUSY; // TODO: Clean this up
+
 					WriteFile(
 						pipes[i].handle,
-						&error_response,
-						1,
+						&tmp,
+						sizeof(tmp),
 						NULL,
 						&pipes[i].overlap
 					);
 				} else {
 					// TODO: make this more efficient maybe
-					// ! TODO: does not account for 32 bit handles
-					char message[25];
+					handshake::RequestAck message;
 
-					message[0] = 0; // Success code
+					// TODO: cleanup
+					message.status = handshake::RequestAck::Status::SUCCESS;
 
-					memcpy(message + 1, client -> sessionId, 16);
+					memcpy(&message.sid, client -> sessionId, 16);
 
 					// TODO: clean this up
 					HANDLE clientHandle = OpenProcess(
 						PROCESS_DUP_HANDLE,
 						false,
-						*reinterpret_cast<uint32_t*>(pipes[i].buffer + 1)
+						pipes[i].buffer.pid
 					);
 
 					// ? What happens if the client doesn't close this handle? Should we close it?
@@ -144,7 +142,7 @@ bool registration_server::cycle() {
 						GetCurrentProcess(),
 						client -> fileHandle,
 						clientHandle,
-						reinterpret_cast<HANDLE*>(message + 17),
+						&message.fileHandle,
 						NULL,
 						false,
 						DUPLICATE_SAME_ACCESS 
@@ -155,7 +153,7 @@ bool registration_server::cycle() {
 					WriteFile(
 						pipes[i].handle,
 						&message,
-						25,
+						sizeof(message),
 						NULL,
 						&pipes[i].overlap
 					);

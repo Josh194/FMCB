@@ -17,8 +17,8 @@ namespace handshake {
         } capabilities;
     };
 
-    struct QueryAck { // ! May not be needed
-
+    struct QueryAck { 
+        // ! May not be needed
     };
 
     /*
@@ -49,6 +49,7 @@ namespace handshake {
         /*
         A handle to a shared communication file, duplicated to the context of the requesting client.
         */
+        // ! Can we only use the low 32 bits (Supposedly only ones used when sharing between 32/64 bit processes)? Would save 8 bytes if so.
         alignas(8) void* fileHandle; // https://docs.microsoft.com/en-us/windows/win32/winprog64/interprocess-communication
 
         /*

@@ -1,5 +1,8 @@
 #pragma once
 
+// ! TODO: cleanup
+#include "../../core/data/Protocal.h" // ! TODO: Move data to a shared folder
+
 /*
 Contains functions to register a subsystem with the core server.
 */
@@ -22,6 +25,6 @@ namespace registration {
 
     Returns the received status code, or -1 if the pipe was busy.
     */
-    char request();
+    handshake::RequestAck::Status request();
 
 }
