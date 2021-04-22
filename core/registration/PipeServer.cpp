@@ -1,13 +1,14 @@
 #include "PipeServer.h"
 
 #include "Register.h"
+#include "data/Protocal.h"
 
 #include <Windows.h>
 #include <iostream>
 
 // TODO: replace with variable; pipe count must be <= maxSubsystems
 #define PIPE_COUNT 2
-#define PIPE_BUFFER_SIZE 32
+#define PIPE_BUFFER_SIZE sizeof(handshake::Request)
 
 struct PipeInst {
 	HANDLE handle = INVALID_HANDLE_VALUE;

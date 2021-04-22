@@ -1,3 +1,7 @@
 #pragma once
 
-#define VERSION "${VERSION}"
+namespace config {
+
+    constexpr char VERSION[] = "${VERSION}";
+
+}
