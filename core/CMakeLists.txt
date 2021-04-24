@@ -4,6 +4,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CM
 
 # This should probably be improved, the core server could potentially become quite large
 add_executable(Core
+    Status.cpp
     Core.cpp
     data/Database.cpp
     registration/PipeServer.cpp

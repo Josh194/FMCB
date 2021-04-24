@@ -1,5 +1,7 @@
 #include "Register.h"
 
+#include "Status.h"
+
 #include <windows.h>
 #include <iostream>
 
@@ -9,12 +11,16 @@ void client_register::init(std::uint32_t maxClients) {
 	::maxClients = maxClients;
 }
 
-/*
-TODO: nameLength must be (max - 1) (- 1 so a null terminator can be inserted)
-We may need a program wide error system, similar to win32, in order to free up return values
-*/
 const Client* client_register::registerClient(char* name, unsigned char nameLength) {
 	if (database::clients.getLength() == maxClients) {
+		status = Status::kErrorOverflow;
+		
+		return nullptr;
+	}
+
+	if (nameLength >= maxName) {
+		status = Status::kErrorInvalidParameter;
+
 		return nullptr;
 	}
 
@@ -30,7 +36,6 @@ const Client* client_register::registerClient(char* name, unsigned char nameLeng
 		NULL // Protects access from unauthorized local subsystems
 	);
 
-	// ! We need an program wide error system
 	if (client.fileHandle == NULL) {
 		std::cout << "Create file error: " << GetLastError() << std::endl;
 
@@ -45,7 +50,6 @@ const Client* client_register::registerClient(char* name, unsigned char nameLeng
 		1024 // TODO: this should be handled better
 	);
 
-	// ! We need an program wide error system
 	if (client.communication == NULL) {
 		std::cout << "Map error: " << GetLastError() << std::endl;
 
