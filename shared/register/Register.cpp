@@ -31,6 +31,7 @@ handshake::RequestAck::Status registration::request() {
     };
 
     handshake::RequestAck in;
+    in.status = in.SUCCESS;
 
     // TODO: can we find a use for this?
     DWORD bytesRead;

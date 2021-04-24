@@ -26,8 +26,8 @@ namespace handshake {
     */
     struct Request {
         enum struct Type : std::int32_t {
-            REGISTER_NEW = 0,
-            REGISTER_EXISTING = 1
+            REGISTER_NEW = 1,
+            REGISTER_EXISTING = 2
         } type;
 
         std::uint32_t pid;
@@ -40,10 +40,11 @@ namespace handshake {
         /*
         The status of the request.
         */
-        enum struct Status : std::int32_t {
-            SUCCESS = 0,
-            ERROR_REQUEST_DENIED = -1,
-            ERROR_SERVER_BUSY = -2
+        enum Status : std::int32_t {
+            ERROR_REQUEST_DENIED = -2,
+            ERROR_INVALID_REQUEST,
+            SUCCESS, // TODO: Assert this
+            ERROR_SERVER_BUSY
         } status;
 
         /*
