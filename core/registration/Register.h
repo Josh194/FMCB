@@ -4,8 +4,6 @@
 
 #include <cstdint>
 
-constexpr unsigned char maxName = 24;
-
 /*
 Contains the functions necessary to interact with the internal list of registered clients.
 */
