@@ -50,7 +50,7 @@ DWORD WINAPI inputThread(LPVOID lpThreadParameter) {
 }
 
 int main(int argc, char** argv) {
-	std::cout << "FMCB core server " << VERSION << std::endl;
+	std::cout << "FMCB core server " << config::VERSION << std::endl;
 
 	minparse::init(argc - 1, argv + 1);
 
