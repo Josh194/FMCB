@@ -1,6 +1,7 @@
 #include "PipeServer.h"
 
 #include "Register.h"
+#include "Status.h"
 
 #include <Windows.h>
 #include <iostream>
@@ -113,7 +114,9 @@ bool registration_server::cycle() {
 
 				// TODO: maybe move read/write code to their own functions, this is a bit messy
 				if (client == nullptr) {
-					std::cout << "Maximum number of subsystems reached, request will not be serviced" << std::endl; // ! Or prehaps an error occurred, we need an error system!
+					if (status == Status::kErrorOverflow) {
+						std::cout << "Maximum number of subsystems reached, request will not be serviced" << std::endl;
+					};
 
 					WriteFile(
 						pipes[i].handle,
