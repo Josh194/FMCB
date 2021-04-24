@@ -1,6 +1,7 @@
 #include "PipeServer.h"
 
 #include "Register.h"
+#include "Status.h"
 #include "data/Protocal.h"
 
 #include <Windows.h>
@@ -110,7 +111,9 @@ bool registration_server::cycle() {
 
 				// TODO: maybe move read/write code to their own functions, this is a bit messy
 				if (client == nullptr) {
-					std::cout << "Maximum number of subsystems reached, request will not be serviced" << std::endl; // ! Or prehaps an error occurred, we need an error system!
+					if (status == Status::kErrorOverflow) {
+						std::cout << "Maximum number of subsystems reached, request will not be serviced" << std::endl;
+					};
 
 					handshake::RequestAck::Status tmp = handshake::RequestAck::Status::ERROR_SERVER_BUSY; // TODO: Clean this up
 
