@@ -10,11 +10,14 @@ void client_register::init(std::uint32_t maxClients) {
 }
 
 /*
-TODO: nameLength must be (max - 1) (- 1 so a null terminator can be inserted)
 We may need a program wide error system, similar to win32, in order to free up return values
 */
 const Client* client_register::registerClient(char* name, unsigned char nameLength) {
 	if (database::clients.getLength() == maxClients) {
+		return nullptr;
+	}
+
+	if (nameLength >= maxName) {
 		return nullptr;
 	}
 
