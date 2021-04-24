@@ -109,7 +109,7 @@ bool registration_server::cycle() {
 				std::cout << "Connection received on pipe#" << i << std::endl;
 
 				// TODO:: clean this up maybe
-				const Client* client = client_register::addClient(pipes[i].buffer + 6, pipes[i].buffer[5]);
+				const Client* client = client_register::registerClient(pipes[i].buffer + 6, pipes[i].buffer[5]);
 
 				// TODO: maybe move read/write code to their own functions, this is a bit messy
 				if (client == nullptr) {
@@ -135,7 +135,7 @@ bool registration_server::cycle() {
 					HANDLE clientHandle = OpenProcess(
 						PROCESS_DUP_HANDLE,
 						false,
-						*(uint32_t*) (pipes[i].buffer + 1)
+						*reinterpret_cast<uint32_t*>(pipes[i].buffer + 1)
 					);
 
 					// ? What happens if the client doesn't close this handle? Should we close it?
@@ -143,7 +143,7 @@ bool registration_server::cycle() {
 						GetCurrentProcess(),
 						client -> fileHandle,
 						clientHandle,
-						(HANDLE*) (message + 17),
+						reinterpret_cast<HANDLE*>(message + 17),
 						NULL,
 						false,
 						DUPLICATE_SAME_ACCESS 

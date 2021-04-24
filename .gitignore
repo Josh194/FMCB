@@ -10,6 +10,7 @@ Minecraft/FMCB/gradlew.bat
 
 # CMake/Ninja Files
 /bin
+/install
 
 # VSCode Project Files
 .vscode
