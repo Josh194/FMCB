@@ -18,7 +18,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # -mno-ms-bitfields is only needed to make -Wpadded work correctly, this could cause problems down the line. A gnu bugzilla report has been filed under the id: 100058
 set(CMAKE_CXX_FLAGS "-std=c++17 -mno-ms-bitfields -fdiagnostics-color=always -fno-rtti")
 
-set(CXX_WARNINGS "-Wall -Wextra -Wold-style-cast -Wshadow -Wdouble-promotion -Wundef -Wconversion -Wcast-align=strict -Wpadded")
+set(CXX_WARNINGS "-Wall -Wextra -Wdisabled-optimization -Wold-style-cast -Wshadow -Wdouble-promotion -Wundef -Wconversion -Wcast-align=strict -Wpadded")
 
 set(CMAKE_CXX_FLAGS_DEBUG  "-g ${CXX_WARNINGS}")
 set(CMAKE_CXX_FLAGS_RELEASE  "-O3 -DNDEBUG")

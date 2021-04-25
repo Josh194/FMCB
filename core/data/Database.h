@@ -1,10 +1,7 @@
 #pragma once
 
 #include "LinkedArray.h"
-
-#include <cstdint>
-
-typedef uint64_t SessionId[2]; // 64 bits * 2 = 128 bits
+#include "Protocal.h"
 
 // This ordering should be fairly optimal for memory/performance
 struct Client {
@@ -12,7 +9,7 @@ struct Client {
 	void* communication;
 	SessionId sessionId;
 
-	char name[24];
+	char name[handshake::maxName];
 };
 
 namespace database {
