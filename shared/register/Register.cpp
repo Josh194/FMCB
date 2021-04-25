@@ -22,16 +22,14 @@ bool registration::initialize(const char* name, unsigned char nameLength) {
 
 handshake::RequestAck::Status registration::request() {
     // TODO: use initialized name
-    // Type: REGISTER_NEW (1), PID: DWORD (0 0 0 0), Name Size: 4 (4), Name: Test (84 101 115 116)
     handshake::Request out = {
-        handshake::Request::Type::REGISTER_NEW,
+        handshake::Request::kRegisterNew,
         GetCurrentProcessId(),
         4,
         "Test"
     };
 
     handshake::RequestAck in;
-    in.status = in.SUCCESS;
 
     // TODO: can we find a use for this?
     DWORD bytesRead;
@@ -55,7 +53,7 @@ handshake::RequestAck::Status registration::request() {
     // ! TODO: save session id
 
     // TODO: cleanup
-    if (in.status == handshake::RequestAck::Status::SUCCESS) { // if successful
+    if (in.status == handshake::RequestAck::kSuccess) { // if successful
         api_global::bufferSize = 1024;
         api_global::fileHandle = in.fileHandle;
     }

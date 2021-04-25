@@ -1,6 +1,7 @@
 #include "Register.h"
 
 #include "Status.h"
+#include "data/Protocal.h"
 
 #include <windows.h>
 #include <iostream>
@@ -18,7 +19,7 @@ const Client* client_register::registerClient(char* name, unsigned char nameLeng
 		return nullptr;
 	}
 
-	if (nameLength >= maxName) {
+	if (nameLength >= handshake::maxName) {
 		status = Status::kErrorInvalidParameter;
 
 		return nullptr;

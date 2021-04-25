@@ -115,7 +115,7 @@ bool registration_server::cycle() {
 						std::cout << "Maximum number of subsystems reached, request will not be serviced" << std::endl;
 					};
 
-					handshake::RequestAck::Status tmp = handshake::RequestAck::Status::ERROR_SERVER_BUSY; // TODO: Clean this up
+					handshake::RequestAck::Status tmp = handshake::RequestAck::kErrorServerBusy; // TODO: Clean this up
 
 					WriteFile(
 						pipes[i].handle,
@@ -129,7 +129,7 @@ bool registration_server::cycle() {
 					handshake::RequestAck message;
 
 					// TODO: cleanup
-					message.status = handshake::RequestAck::Status::SUCCESS;
+					message.status = handshake::RequestAck::kSuccess;
 
 					memcpy(&message.sid, client -> sessionId, 16);
 

@@ -40,7 +40,7 @@ int main() {
     // ! Isn't used by request() yet
     // registration::initialize();
 
-    if (registration::request() == handshake::RequestAck::Status::SUCCESS) {
+    if (registration::request() == handshake::RequestAck::kSuccess) {
         std::cout << "Connection successful" << std::endl;
 
         char* comm = reinterpret_cast<char*>(communication::map());
