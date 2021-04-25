@@ -1,7 +1,7 @@
 #pragma once
 
-// ! TODO: cleanup
-#include "../../core/data/Protocal.h" // ! TODO: Move data to a shared folder
+// ! TODO: Move data to a shared folder
+#include "../../server/data/Protocal.h"
 
 /*
 Contains functions to register a subsystem with the core server.
