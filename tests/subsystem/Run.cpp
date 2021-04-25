@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "Register.h"
-#include "BufferAccess.h"
+#include "register/Register.h"
+#include "memory/BufferAccess.h"
 
 #include <atomic>
 #include <Windows.h> // ! Only needed for inputThread

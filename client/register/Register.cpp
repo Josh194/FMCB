@@ -1,6 +1,6 @@
 #include "Register.h"
 
-#include "../Global.h"
+#include "Global.h"
 
 #include <cstring>
 #include <Windows.h>

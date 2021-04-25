@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "LinkedArray.h"
+#include "data/LinkedArray.h"
 
 int main() {
     LinkedArray<int, 20> la = LinkedArray<int, 20>();

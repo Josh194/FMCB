@@ -6,7 +6,7 @@ include_directories($ENV{JAVA_HOME}/include $ENV{JAVA_HOME}/include/win32)
 
 add_library(JavaWrapperDef SHARED fmcb_Memory.cpp fmcb_Register.cpp)
 
-target_link_libraries(JavaWrapperDef SharedMemory)
+target_link_libraries(JavaWrapperDef ClientCore)
 
 # Clean this up
 find_package(Java 1.8 REQUIRED) # How should we handle Java versions?
