@@ -1,8 +1,8 @@
 ---
-name: Bug report
+name: Bug Report
 about: Create a report to help us improve
 title: ''
-labels: bug
+labels: 'bug'
 assignees: ''
 
 ---
@@ -22,8 +22,8 @@ If applicable, add screenshots to help explain your problem.
 
 **Environment (please complete the following information):**
  - OS: [Mac, Windows, etc]
- - Version: [Catalina, 19042.685, etc]
- - Mod Version: [0.0.2, 0.2.1, etc]
+ - OS Version: [Catalina, 19042.685, etc]
+ - Server Version: [0.0.2, 0.2.1, etc]
 
 **Additional context**
 Add any other context about the problem here.
