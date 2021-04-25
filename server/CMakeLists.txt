@@ -3,9 +3,9 @@ configure_file(Info.h.in Info.h)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/minparse/include) # A bit messy
 
 # This should probably be improved, the core server could potentially become quite large
-add_executable(Core
+add_executable(Server
+    Server.cpp
     Status.cpp
-    Core.cpp
     data/Database.cpp
     registration/PipeServer.cpp
     registration/Register.cpp
@@ -13,4 +13,4 @@ add_executable(Core
     processing/modules/translate/Translate.cpp
 )
 
-set_property(TARGET Core PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+set_property(TARGET Server PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)

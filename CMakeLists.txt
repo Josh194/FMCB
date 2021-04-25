@@ -28,7 +28,8 @@ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO  "-g -O3 -DNDEBUG")
 set(CMAKE_EXE_LINKER_FLAGS "-static-libstdc++ -static-libgcc")
 
 # Add any (internal) directories containing a CMakeLists.txt that should be built here
-add_subdirectory(core)
+add_subdirectory(server)
+add_subdirectory(client)
 add_subdirectory(shared)
 
 add_subdirectory(tests)
