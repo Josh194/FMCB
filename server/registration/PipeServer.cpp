@@ -2,7 +2,7 @@
 
 #include "Register.h"
 #include "Status.h"
-#include "data/Protocal.h"
+#include "protocol/Protocol.h"
 
 #include <Windows.h>
 #include <iostream>

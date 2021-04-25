@@ -1,7 +1,7 @@
 #pragma once
 
 #include "LinkedArray.h"
-#include "Protocal.h"
+#include "protocol/Protocol.h"
 
 // This ordering should be fairly optimal for memory/performance
 struct Client {

@@ -1,6 +1,6 @@
 #include "BufferAccess.h"
 
-#include "../Global.h"
+#include "Global.h"
 
 #include <Windows.h>
 
