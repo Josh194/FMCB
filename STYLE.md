@@ -1,38 +1,148 @@
-Status Code (`std::int32_t`)
-Value | Meaning
---- | ---
-<0 | Failure
-0 | Success
-\>0 | Extended Success
+*This document serves to lay out the basic code guidelines for FMCB. That includes syntax style, code style, and other various conventions. This is by no means a comprehensive list, and is expected to be expanded upon over time. In general, if something is not listed here, try to infer style from the code around you.*
 
-Status codes should not be set/used in areas that should only fail as a result of a larger issue (the client database being corrupted, the input parameters not following preconditions (inferred or explicit), etc).
-Preconditions should be documented if doing so would negate the use of error setting and would not complicate the caller.
+*If you have a question about the guidelines, feel free to ask a question on the project discussion page. If you think something here should be changed, you may open an issue and we will consider it.*
 
-- IPC:
-  <br>Each transaction should contain a status code (`std::int32_t` unless there is a good reason to do otherwise), the meaning of which should be specified by an local enum.
+# Documentation
 
-- Internal (core or API):
-  <br>In internal code, there is a global status enum containing all possible errors. The extended success section is reserved for individual functions, and may carry different meanings for each use case.
+All classes and functions should be documented with a single, Doxygen style, multi-line comment. Each line in a documentation block should be prefixed by a `*`. Until the codebase is stable, however, code with a clear purpose can be left undocumented, though `// TODO: Documentation` should be left in it's place. Single-line comments can be placed at your discretion.
 
-  - If a function returns non-void
-    - If invalid return values exist
-      <br>Pick one (use 0/-1 if convenient, then whatever works) to notify the caller of a failure.
-      <br>On failure, return the value and set the error code accordingly.
-      <br>On success, do not modify the error code, unless there are extended modes of success the caller should know about.
+Speaking of `TODO`, there are several comment prefixes you should use:
 
-      <br>If all return values are valid, follow the rules of a function returning void.
+- `TODO`: Let people know that something is unfinished.
 
-  - If a function returns void:
-    <br>Return the status code instead of setting it.
-    <br>If there is a reason for that not being a good option (such as this being a non-void function with no invalid return values), then always set the status code regardless of execution.
+  Eg: `// TODO: Do something`
 
-- Checking status:
-  <br>Check efficiently; the expected case should have a very fast execution path.
-  <br>Usually, this means checking for a general case (success/failure) first, then narrowing down the result.
+- `?`: Ask a question about something. If you come across a question that you can answer, you may do so, and make a decision on what to do next. For example, if you came across `// ? Is this safe?`, and you find the answer to be no, you might want to change it to `// TODO: Make this safe` or simply fix it if you feel you can.
 
-  <br>Errors do not have to be handled immediately, they can be passed on (as long as it is documented).
+  Eg: `// ? Is this right?`
 
-- `std` exceptions:
-  <br>Exceptions are allowed for exceptional cases only and should be used _sparingly_.
-  <br>They should be used in cases where a very rare (critical) failure can occur in which it is possible to recover from, or at least handle in some capacity.
-  <br>Exceptions are used with the assumption that the implementation is zero-cost. If a common target cannot (does not?) use a zero-cost model, this stance may be reevaluated.
+- `!`: A critical comment or bug.
+
+  Eg: `// ! This can corrupt memory`
+
+These prefixes should only be used in single-line comments.
+
+Additionally, if you are using VSCode, you can get highlighting for these prefixes by using the [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) extension.
+
+# Syntax
+
+Trying to write down every little syntax rule here would be counterproductive; not only would the list be massive, but there will always be edge cases where you will have to make your own judgements.
+
+That being said, we can include some basics.
+
+- **Whitespace**
+
+  This is a fairly large point. Instead of trying to make an in-depth rulebook, just try to follow the style of this general example:
+
+  ```c++
+  #include <iostream>
+  
+  class Rect {
+  public:
+      Rect(int width, int height) {
+          W = width;
+          H = height;
+      }
+      
+      int getArea() {
+          return W * H;
+      }
+      
+  private:
+      int W;
+      int H;
+  };
+  
+  int main() {
+      // Alternatively:
+      // Rect rect[3] = {Rect(2, 3), Rect(5, 1), Rect(6, 3)};
+      Rect rect[3] = {
+          Rect(2, 3),
+          Rect(5, 1),
+          Rect(6, 3)
+      };
+      
+      for (int i = 0; i < 3; i++) {
+      	if (rect[i].getArea() > 0) {
+  			std::cout << "Area is valid" << std::endl;
+      	} else {
+          	std::cout << "Area is invalid" << std::endl;
+      	}
+      }
+      
+      return 0;
+  }
+  ```
+
+  For some additional pointers, mathematical expressions should always have spaces around operators, unless the expression is especially long, and omitting the whitespace would provide better readability. Vertical whitespace should be used to separate ideas, and shouldn't be applied based on any hard rule.
+
+- **Naming**
+
+  This rule should be followed very closely. If a problem arises, we'd rather change the rule than have an inconsistent one.
+
+  - Classes: camel case, with the first letter being upper case.
+
+    Eg: `LinkedList`
+
+  - Variables/Functions/Arguments: camel case, with the first letter being lower case.
+
+    Eg: `nameLength`
+
+  - Constants: same as variables, though with the first letter being `k`.
+
+    Eg: `kErrorSuccess`
+
+  - Macros: all capital snake case.
+
+    Eg: `ERROR_SUCCESS`
+
+  - namespaces: snake case.
+
+    Eg: `program_defaults`
+
+  
+
+# Style
+
+- **Dependencies**
+
+  We would like to keep the project as self-contained as possible, it is very likely that we will deny an addition that introduces a new dependency. That's not to say we won't use any, OpenSSL is planned to be used as an aid in network security, but for many things, we'd rather just implement it ourselves.
+
+- **Feature usage**
+
+  Don't be afraid to use new C++ features. We build using C++17, and may switch to C++20 sometime in the future. Feel free to use any tools at your disposal, though try to refrain from using extensions to the standard unless you have a good reason.
+
+- **Priorities**
+
+  Don't follow a strict organization of priorities, write code as you feel is appropriate. That being said, we do have a *very* loose hierarchy, that being:
+
+  1. Maintainability
+  2. Runtime Efficiency
+  3. Functionality
+  4. Readability
+  5. Compile Time
+
+  Again though, this should not be a strict list. Don't make something unreadable for a 1% performance improvement, and vice versa. Don't add a small bit of extra functionality for a large performance hit. You get the idea.
+
+  Performance is important to us though; please don't use `std::shared_ptr` just because you can, `std::array` just because it exists. Make sure you have a good reason before needlessly slowing your code, even if the hit is tiny.
+
+## Error Handling
+
+Errors are mainly communicated and checked using the  `status` variable contained in `/server/Status.h`. C++ exceptions are also allowed, as long as they follow the rules below.
+
+#### Status
+
+`Status.h` contains a master error enumerator named `Status`, and a variable of type `Status` named `status`, which holds the last set error.
+
+The values of `Status` follow the chart below:
+
+| Value | Meaning                   |
+| ----- | ------------------------- |
+| < 0   | Failure                   |
+| = 0   | Success                   |
+| > 0   | Extended Success (unused) |
+
+The extended success section is not used by `Status`, and each function can decide what those values correspond to.
+
+#### Exceptions
+
