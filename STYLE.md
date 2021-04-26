@@ -39,38 +39,38 @@ That being said, we can include some basics.
   
   class Rect {
   public:
-      Rect(int width, int height) {
-          W = width;
-          H = height;
-      }
-      
-      int getArea() {
-          return W * H;
-      }
-      
+  	Rect(int width, int height) {
+  		W = width;
+  		H = height;
+  	}
+  
+  	int getArea() {
+  		return W * H;
+  	}
+  
   private:
-      int W;
-      int H;
+  	int W;
+  	int H;
   };
   
   int main() {
-      // Alternatively:
-      // Rect rect[3] = {Rect(2, 3), Rect(5, 1), Rect(6, 3)};
-      Rect rect[3] = {
-          Rect(2, 3),
-          Rect(5, 1),
-          Rect(6, 3)
-      };
-      
-      for (int i = 0; i < 3; i++) {
-      	if (rect[i].getArea() > 0) {
+  	// Alternatively:
+  	// Rect rect[3] = {Rect(2, 3), Rect(5, 1), Rect(6, 3)};
+  	Rect rect[3] = {
+  		Rect(2, 3),
+  		Rect(5, 1),
+  		Rect(6, 3)
+  	};
+  
+  	for (int i = 0; i < 3; i++) {
+  		if (rect[i].getArea() > 0) {
   			std::cout << "Area is valid" << std::endl;
-      	} else {
-          	std::cout << "Area is invalid" << std::endl;
-      	}
-      }
-      
-      return 0;
+  		} else {
+  			std::cout << "Area is invalid" << std::endl;
+  		}
+  	}
+  
+  	return 0;
   }
   ```
 
