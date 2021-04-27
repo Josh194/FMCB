@@ -1,14 +1,17 @@
 # How to contribute
 If you would like to contribute to FMCB, thank you! We welcome any contributions and will do our best to address issues and pull requests in a timely manner. The steps outlined here should be followed as closely as possible to give you the best chance of getting your contribution accepted, but are not mandatory.
+
+_**In addition to this document, you should read the [STYLE.md](STYLE.md) to get a feel for what we expect from your code.**_
+
 - **Work allocation**<br>
-    Unless your contribution is truly tiny (Fixing a typo in a comment, cleaning up a function, a tiny bug fix, etc), you should use a GitHub issue to tell us what you're working on.
+    Unless your contribution is truly tiny (fixing a typo in a comment, cleaning up a function, a tiny bug fix, etc), you should use a GitHub issue to tell us what you're working on.
     There are two ways of doing this:
     1. Comment on an issue stating your intentions to work on it, along with a link to your fork.
     2. Open a new issue and comment on it like above.
     
     As soon as a comment is made, you are free to begin working on the issue, we will notify you if there is any reason we do not want you to work on the issue in a follow-up comment.
 
-    In either situation, you are not required to finish anything. We may assign you to an issue to indicate to others that it is already being worked on, but we do not expect anything of you. That being said, if you do decide to stop working on an issue, please make a second comment on the issue notifying us of that.
+    In either situation, you are not required to finish anything. We may assign you to an issue to indicate to others that it is already being worked on, but we do not expect anything of you. That being said, if you do decide to stop working on something, please make a second comment notifying us of that.
     
     Additionally, you are free to take up an issue that is already assigned to someone else, though note that doing so carries a risk of that person creating a pull request before you, or completing the issue in a preferred way.
     
