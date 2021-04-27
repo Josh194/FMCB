@@ -20,7 +20,7 @@ Speaking of `TODO`, there are several comment prefixes you should use:
 
   Eg: `// ! This can corrupt memory`
 
-These prefixes should only be used in single-line comments.
+These prefixes should not be used in documentation blocks.
 
 Additionally, if you are using VSCode, you can get highlighting for these prefixes by using the [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) extension.
 
@@ -30,7 +30,7 @@ Trying to write down every little syntax rule here would be counterproductive; n
 
 That being said, we can include some basics.
 
-- **Whitespace**
+- #### Whitespace
 
   This is a fairly large point. Instead of trying to make an in-depth rulebook, just try to follow the style of this general example:
 
@@ -76,9 +76,9 @@ That being said, we can include some basics.
 
   For some additional pointers, mathematical expressions should always have spaces around operators, unless the expression is especially long, and omitting the whitespace would provide better readability. Vertical whitespace should be used to separate ideas, and shouldn't be applied based on any hard rule.
 
-- **Naming**
+- #### Naming
 
-  This rule should be followed very closely. If a problem arises, we'd rather change the rule than have an inconsistent one.
+  This rule should be followed very closely. If a conflict arises, we'd rather change the rule than have an inconsistent one.
 
   - Classes: camel case, with the first letter being upper case.
 
@@ -96,7 +96,7 @@ That being said, we can include some basics.
 
     Eg: `ERROR_SUCCESS`
 
-  - namespaces: snake case.
+  - Namespaces: snake case.
 
     Eg: `program_defaults`
 
@@ -104,15 +104,15 @@ That being said, we can include some basics.
 
 # Style
 
-- **Dependencies**
+- #### Dependencies
 
-  We would like to keep the project as self-contained as possible, it is very likely that we will deny an addition that introduces a new dependency. That's not to say we won't use any, OpenSSL is planned to be used as an aid in network security, but for many things, we'd rather just implement it ourselves.
+  We would like to keep the project as self-contained as possible, it is very likely that we will deny an addition that introduces a new dependency. That's not to say we won't use any; for example, OpenSSL is planned to be used as an aid in network security, but for many things, we'd rather just implement it ourselves.
 
-- **Feature usage**
+- #### Feature usage
 
   Don't be afraid to use new C++ features. We build using C++17, and may switch to C++20 sometime in the future. Feel free to use any tools at your disposal, though try to refrain from using extensions to the standard unless you have a good reason.
 
-- **Priorities**
+- #### **Priorities**
 
   Don't follow a strict organization of priorities, write code as you feel is appropriate. That being said, we do have a *very* loose hierarchy, that being:
 
@@ -122,27 +122,45 @@ That being said, we can include some basics.
   4. Readability
   5. Compile Time
 
-  Again though, this should not be a strict list. Don't make something unreadable for a 1% performance improvement, and vice versa. Don't add a small bit of extra functionality for a large performance hit. You get the idea.
+  Again though, this should not be a strict list. Don't make something unreadable for a 1% performance improvement (and vice versa), don't add a small bit of extra functionality for a large performance hit. you get the idea.
 
-  Performance is important to us though; please don't use `std::shared_ptr` just because you can, `std::array` just because it exists. Make sure you have a good reason before needlessly slowing your code, even if the hit is tiny.
+  Performance is important to us though; please don't use `std::shared_ptr` just because you can, `std::array` just because it exists. Use these where it is appropriate, not as a replacement for other types.
 
-## Error Handling
+# Error Handling
 
 Errors are mainly communicated and checked using the  `status` variable contained in `/server/Status.h`. C++ exceptions are also allowed, as long as they follow the rules below.
 
-#### Status
+- #### Errors
 
-`Status.h` contains a master error enumerator named `Status`, and a variable of type `Status` named `status`, which holds the last set error.
+  *Status codes should not be used in areas that would only fail as a result of a larger issue (the client database being corrupted, the input parameters not following preconditions, etc). Additionally, preconditions should be documented if doing so would negate the use of error setting and would not complicate the caller.*
 
-The values of `Status` follow the chart below:
+  `Status.h` contains a master error enumerator named `Status`, and a variable of type `Status` named `status`, which holds the last set error.
 
-| Value | Meaning                   |
-| ----- | ------------------------- |
-| < 0   | Failure                   |
-| = 0   | Success                   |
-| > 0   | Extended Success (unused) |
+  The values of `Status` follow the chart below:
 
-The extended success section is not used by `Status`, and each function can decide what those values correspond to.
+  | Value | Meaning                   |
+  | ----- | ------------------------- |
+  | < 0   | Failure                   |
+  | = 0   | Success                   |
+  | > 0   | Extended Success (unused) |
 
-#### Exceptions
+  The extended success section is not used by `Status`, and each function can decide what those values correspond to.
+
+  *Errors should not be propagated through applications, they should be handled locally. That being said, applications should communicate the result of important transactions to each other; each transaction should contain a status code (`std::int32_t` unless there is a good reason to do otherwise), the meaning of which should be specified by an enumerator defined by the server.*
+
+  To throw an error, follow the diagram below.
+
+  ![Error Handling](D:\Eclipse\FMCB\FMCB\resources\project\ErrorHandling.gv.svg)
+
+  When checking errors, do so efficiently; the expected case should have a fast execution path.
+
+  Errors do not have to be handled immediately, they can be passed on (as long as it is documented).
+
+- #### Exceptions
+
+  *Exceptions are allowed for exceptional cases only and should be used **sparingly**. They should be used in cases where a very rare (critical) failure can occur in which it is possible to recover from, or at least handle in some capacity.*
+
+  *Exceptions are used with the assumption that the implementation is zero-cost.*
+
+  Try to batch exception handling code into the same areas as much as possible. Place where it would work the best, but if given a choice, prefer to keep the codebase easy to understand.
 

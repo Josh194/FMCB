@@ -1,0 +1,30 @@
+digraph ErrorHandling {
+	node[shape = "box"];
+
+	{
+		rankdir = LR;
+		rank = same;
+		edge[style = invis];
+
+
+		errorSome[label = "Pick one (0 or -1 if convenient) to notify the caller of a failure."];
+		invalid[label = "Do invalid return values exist?"];
+		errorAll[label = "Return the status code, or set it regardless of execution."];
+
+		errorSome -> invalid -> errorAll;
+	}
+
+	returns[label = "Function returns:"];
+
+	someSuccess[label = "Do not modify the error code, unless there are extended modes of success the caller should know about"];
+	someFail[label = "Return the value and set the error code accordingly."];
+
+	returns -> invalid[label = "non-void"];
+	returns -> errorAll[label = "void"];
+
+	invalid -> errorAll[label = "no"];
+
+	invalid -> errorSome[label = "yes"];
+	errorSome -> someSuccess[label = "success"];
+	errorSome -> someFail[label = "failure"];
+}
