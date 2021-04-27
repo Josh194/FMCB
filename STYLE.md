@@ -150,7 +150,7 @@ Errors are mainly communicated and checked using the  `status` variable containe
 
   To throw an error, follow the diagram below.
 
-  ![Error Handling](D:\Eclipse\FMCB\FMCB\resources\project\ErrorHandling.gv.svg)
+  ![Error Handling](resources/project/ErrorHandling.gv.svg)
 
   When checking errors, do so efficiently; the expected case should have a fast execution path.
 
