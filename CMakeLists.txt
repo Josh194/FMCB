@@ -8,8 +8,10 @@ check_ipo_supported()
 # maybe error check to insure version was found
 file(READ info.json INFO_JSON)
 string(JSON VERSION GET "${INFO_JSON}" version)
-
 message("Server version is ${VERSION}")
+
+set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install) # Should this be in /bin?
+message("Install location is \"${CMAKE_INSTALL_PREFIX}\"")
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo" CACHE STRING "")
 
