@@ -1,6 +1,6 @@
 *This document serves to lay out the basic code guidelines for FMCB. That includes syntax style, code style, and other various conventions. This is by no means a comprehensive list, and is expected to be expanded upon over time. In general, if something is not listed here, try to infer style from the code around you.*
 
-*If you have a question about the guidelines, feel free to ask a question on the project discussion page. If you think something here should be changed, you may open an issue and we will consider it.*
+*If you have a question about the guidelines, feel free to ask it on the project discussion page. If you think something here should be changed, you may open an issue and we will consider it.*
 
 # Documentation
 
@@ -74,7 +74,7 @@ That being said, we can include some basics.
   }
   ```
 
-  For some additional pointers, mathematical expressions should always have spaces around operators, unless the expression is especially long, and omitting the whitespace would provide better readability. Vertical whitespace should be used to separate ideas, and shouldn't be applied based on any hard rule.
+  Mathematical expressions should always have spaces around operators, unless the expression is especially long, and omitting the whitespace would provide better readability. Vertical whitespace should be used to separate ideas, and shouldn't be applied based on any hard rule.
 
 - #### Naming
 
@@ -122,7 +122,7 @@ That being said, we can include some basics.
   4. Readability
   5. Compile Time
 
-  Again though, this should not be a strict list. Don't make something unreadable for a 1% performance improvement (and vice versa), don't add a small bit of extra functionality for a large performance hit. you get the idea.
+  Again though, this should not be a strict list. Don't make something unreadable for a 1% performance improvement (and vice versa), don't add a small bit of extra functionality for a large performance hit, you get the idea.
 
   Performance is important to us though; please don't use `std::shared_ptr` just because you can, `std::array` just because it exists. Use these where it is appropriate, not as a replacement for other types.
 
@@ -162,5 +162,5 @@ Errors are mainly communicated and checked using the  `status` variable containe
 
   *Exceptions are used with the assumption that the implementation is zero-cost.*
 
-  Try to batch exception handling code into the same areas as much as possible. Place where it would work the best, but if given a choice, prefer to keep the codebase easy to understand.
+  Try to batch exception handling code into the same areas as much as possible. Place it where it works best, but if given a choice, prefer to keep the codebase easy to understand.
 
