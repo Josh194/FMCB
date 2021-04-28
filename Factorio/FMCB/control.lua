@@ -2,6 +2,7 @@ script.on_event({defines.events.on_tick},
    function (e)
       if e.tick == 0 then
          game.print("FMCB has been correctly loaded")
+         game.print(fmcb.int_cube(4))
 
          -- local chest_inventory = entity.get_inventory(1)
          -- local item = "coal"
