@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.19)
 
+if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+    message(FATAL_ERROR "Do not build in source")
+endif()
+
 project(FMCB)
 
 include(CheckIPOSupported)
@@ -10,6 +14,9 @@ file(READ info.json INFO_JSON)
 string(JSON VERSION GET "${INFO_JSON}" version)
 
 message("Server version is ${VERSION}")
+
+set(GRAPHVIZ_GENERATE_PER_TARGET false)
+set(GRAPHVIZ_GENERATE_DEPENDERS false)
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo" CACHE STRING "")
 
