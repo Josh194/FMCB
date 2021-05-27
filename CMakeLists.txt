@@ -12,8 +12,10 @@ check_ipo_supported()
 # maybe error check to insure version was found
 file(READ info.json INFO_JSON)
 string(JSON VERSION GET "${INFO_JSON}" version)
-
 message("Server version is ${VERSION}")
+
+set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install) # Should this be in /bin?
+message("Install location is \"${CMAKE_INSTALL_PREFIX}\"")
 
 set(GRAPHVIZ_GENERATE_PER_TARGET false)
 set(GRAPHVIZ_GENERATE_DEPENDERS false)

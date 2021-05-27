@@ -1,3 +1,6 @@
 [submodule "minparse"]
 	path = minparse
 	url = https://github.com/Josh194/ArgParse
+[submodule "zydis"]
+	path = zydis
+	url = https://github.com/zyantific/zydis.git
